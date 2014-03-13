@@ -1,0 +1,145 @@
+body {
+	font-family: Verdana, Arial, Lucida Console;
+	font-weight: normal;
+	font-size: 20px;
+	color: #CDDAE0;
+	
+	background-color: #203B58;
+}
+
+H1 {
+	font-size: 35px;
+}
+
+input, select, button {
+	font-family: Verdana;
+	font-weight: bold;
+	font-size: 18px;
+	color: #CDDAE0;
+	background-color: #203B58;
+	border: 2px solid #88A8B7;
+	border-radius: 4px;
+	outline: none;
+}
+
+input:hover, select:hover, button:hover {
+	box-shadow: 0 0 7px #88A8B7;
+}
+
+input:focus, select:focus, button:focus {
+	box-shadow: 0 0 10px 1px #88A8B7;
+}
+
+hr {
+	width: 100%;
+	size: 2px;
+	color: #CDDAE0;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #CDDAE0;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #CDDAE0;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #CDDAE0;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #CDDAE0;
+}
+
+/*----------LOGO-----------*/
+
+#logoTop {
+	#color: #B0C6E2;
+	color: #CDDAE0;
+	#color: #B5C9D2;
+	max-height:23px;
+	overflow: hidden;
+	padding-top: 0px;
+	clear: both;
+}
+
+#logoMiddle {
+	color: #B5C9D2;
+	max-height:2px;
+	overflow: hidden;
+	vertical-align: bottom;
+	clear: both;
+}
+
+#logoMiddleInner {
+	margin-top: -23px;
+}
+
+#logoBottom {
+	color: #88A8B7;
+	max-height:11px;
+	overflow: hidden;
+	vertical-align: bottom;
+	clear: both;
+}
+
+#logoBottomInner {
+	margin-top: -25px;
+}
+
+/*----------CharContainer-----------*/
+
+#charMasterContainer {
+	width: 100%;
+	/* height: 50%; */
+	text-align: left;
+}
+
+#charContainerHeader {
+	font-weight: bold;
+}
+
+.charContainer, .charContainerNpc, .charContainerSelected, .charContainerNpcSelected, #charContainerHeader {
+	width: 100%;
+	height: 35px;
+	padding: 2px;
+}
+
+.charContainerNpc{
+	color: #88A8B7;
+}
+
+.charContainerSelected{
+	background-color: #CDFFCD;
+	color: #203B58;
+}
+
+.charContainerNpcSelected{
+	background-color: #CDFFCD;
+	color: #203B58;
+}
+
+#charName, #charInit {
+	width: 20%;
+	float: left;
+}
+
+.charInitInput {
+	width: 31px;
+}
+
+#formSeparator {
+	width: 450px;
+	margin-left: 0px;
+}
+
+#charAddForm {
+	width: 100%;
+	margin-top: 10px;
+	float: left;
+	/* text-align: left;  */
+}
+
+#nextButton {
+	width: 100px;
+	height: 50px;
+	margin-left: 30%;
+}
