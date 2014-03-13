@@ -46,6 +46,8 @@ function addChar(charNameAtt, npcSelectedAtt){
 	
 	//-----------Creating the elements-----------
 	var parentDiv = document.createElement("div");
+	var delMinusParentContainer = document.createElement("div");
+	var delMinusContainer = document.createElement("div");
 	var name = document.createElement("div");
 	var initiativeContainer = document.createElement("div");
 	var initiative = document.createElement("input");
@@ -54,19 +56,26 @@ function addChar(charNameAtt, npcSelectedAtt){
 	if(npcSelectedAtt) parentDiv.setAttribute("class", "charContainerNpc");
 	else  parentDiv.setAttribute("class", "charContainer");
 	parentDiv.setAttribute("id", "charContainer"+counter);
+	delMinusParentContainer.setAttribute("id", "charDel");
+	delMinusContainer.setAttribute("id", "charDelMinus");
+	name.setAttribute("id", "charName");
 	initiativeContainer.setAttribute("id", "charInit");
 	initiative.setAttribute("class", "charInitInput");
 	initiative.setAttribute("id", "charInitInput"+counter);
-	name.setAttribute("id", "charName");
 	counter++;
 	
 	//-----------Filling the elements-----------
 	name.innerHTML = charNameAtt;
+	delMinusParentContainer.innerHTML = "["
+	delMinusContainer.innerHTML = "-";
 	
 	//-----------Getting the parent element to insert into-----------
 	var insertChar = document.getElementById("charMasterContainer");
 	
 	//-----------Inserting the elements-----------
+	delMinusParentContainer.appendChild(delMinusContainer);
+	delMinusParentContainer.innerHTML = (delMinusParentContainer.innerHTML + "]");
+	parentDiv.appendChild(delMinusParentContainer);
 	parentDiv.appendChild(name);
 	initiativeContainer.appendChild(initiative);
 	parentDiv.appendChild(initiativeContainer);

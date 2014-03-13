@@ -117,6 +117,23 @@ hr {
 	color: #203B58;
 }
 
+#charDel{
+	width: 37px;
+	float: left;
+	#color: #FF8888;
+	color: #CDDAE0;
+}
+
+#charDel:hover{
+	color: #FF2244;
+	cursor: hand;
+}
+
+#charDelMinus{
+	font-weight:bold;
+	display:inline;
+}
+
 #charName, #charInit {
 	width: 20%;
 	float: left;
