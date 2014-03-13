@@ -66,7 +66,7 @@ function addChar(charNameAtt, npcSelectedAtt){
 	
 	//-----------Filling the elements-----------
 	name.innerHTML = charNameAtt;
-	delMinusParentContainer.innerHTML = "["
+	delMinusParentContainer.innerHTML = "[";
 	delMinusContainer.innerHTML = "-";
 	
 	//-----------Getting the parent element to insert into-----------
