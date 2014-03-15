@@ -10,7 +10,7 @@ var currentMax;
 
 var charInitInputGood;
 
-onLoad(setTimeout(function(){fillContent()}, 1000));
+//onLoad(setTimeout(function(){fillContent()}, 1000));
 
 
 function fillContent(){
