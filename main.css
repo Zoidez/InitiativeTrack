@@ -122,16 +122,24 @@ hr {
 	float: left;
 	#color: #FF8888;
 	color: #CDDAE0;
+	font-weight: bold;
 }
 
-#charDel:hover{
-	color: #FF2244;
+.charDelButton{
+	height: 28px;
+}
+
+.charDelButton:hover{
+	color: #FF6666;
+	border: 2px solid #FF6666;
+	box-shadow: 0 0 7px #FF6666;
 	cursor: hand;
 }
 
 #charDelMinus{
-	font-weight:bold;
-	display:inline;
+	margin-top: -9px;
+	font-size: 30px;
+	font-weight: bold;
 }
 
 #charName, #charInit {

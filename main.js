@@ -5,7 +5,8 @@ var isRed = false; //used in borderColorChange()
 
 var initArray = new Array(); //used in fillArray(), subtract10(), findMax()
 var currentCharParentDiv; //used in findMax(), nextPhase()
-var currentCharIndex; //used in findMax(), nextPhase()
+var currentCharIndex = []; //used in findMax(), nextPhase()
+var currentMax;
 
 var charInitInputGood;
 
@@ -19,12 +20,11 @@ function fillContent(){
 	addChar("#2", true);
 	addChar("#3", false);
 	
-	document.getElementById("charInitInput0").value = "15";
+	document.getElementById("charInitInput0").value = "12";
 	document.getElementById("charInitInput1").value = "16";
 	document.getElementById("charInitInput2").value = "32";
 	document.getElementById("charInitInput3").value = "30";
 	document.getElementById("charInitInput4").value = "31";
-	
 }
 
 function checkForm() {
@@ -46,8 +46,9 @@ function addChar(charNameAtt, npcSelectedAtt){
 	
 	//-----------Creating the elements-----------
 	var parentDiv = document.createElement("div");
-	var delMinusParentContainer = document.createElement("div");
-	var delMinusContainer = document.createElement("div");
+	var delButtonContainer = document.createElement("div");
+	var delButton = document.createElement("button");
+	var delMinus = document.createElement("div");
 	var name = document.createElement("div");
 	var initiativeContainer = document.createElement("div");
 	var initiative = document.createElement("input");
@@ -56,8 +57,11 @@ function addChar(charNameAtt, npcSelectedAtt){
 	if(npcSelectedAtt) parentDiv.setAttribute("class", "charContainerNpc");
 	else  parentDiv.setAttribute("class", "charContainer");
 	parentDiv.setAttribute("id", "charContainer"+counter);
-	delMinusParentContainer.setAttribute("id", "charDel");
-	delMinusContainer.setAttribute("id", "charDelMinus");
+	delButtonContainer.setAttribute("id", "charDel");
+	delButton.setAttribute("class", "charDelButton");
+	delButton.setAttribute("id", "charDelButton"+counter);
+	delButton.setAttribute("onClick", "deleteChar("+counter+")");
+	delMinus.setAttribute("id", "charDelMinus");
 	name.setAttribute("id", "charName");
 	initiativeContainer.setAttribute("id", "charInit");
 	initiative.setAttribute("class", "charInitInput");
@@ -66,16 +70,15 @@ function addChar(charNameAtt, npcSelectedAtt){
 	
 	//-----------Filling the elements-----------
 	name.innerHTML = charNameAtt;
-	delMinusParentContainer.innerHTML = "[";
-	delMinusContainer.innerHTML = "-";
+	delMinus.innerHTML = "-";
 	
 	//-----------Getting the parent element to insert into-----------
 	var insertChar = document.getElementById("charMasterContainer");
 	
 	//-----------Inserting the elements-----------
-	delMinusParentContainer.appendChild(delMinusContainer);
-	delMinusParentContainer.innerHTML = (delMinusParentContainer.innerHTML + "]");
-	parentDiv.appendChild(delMinusParentContainer);
+	delButton.appendChild(delMinus);
+	delButtonContainer.appendChild(delButton);
+	parentDiv.appendChild(delButtonContainer);
 	parentDiv.appendChild(name);
 	initiativeContainer.appendChild(initiative);
 	parentDiv.appendChild(initiativeContainer);
@@ -101,7 +104,7 @@ function borderColorChange(element){
 }
 
 
-function fillArray(){
+/*function fillArray(){
 	var initiative;
 	charInitInputGood = true;
 	for(var i=0; i<counter; i++){
@@ -112,16 +115,24 @@ function fillArray(){
 		}
 		else initArray[i] = parseInt(initiative.value);
 	}
-}
+}*/
 
 function subtract10(){
-	var initiative = document.getElementById("charInitInput"+currentCharIndex)
-	if (initArray[currentCharIndex] > 10) initiative.value = initArray[currentCharIndex] - 10;
-	else initiative.value = 0;
+	var initiativeInput;
+	var initiative;
+	for(var i=0; i<currentCharIndex.length; i++){
+		if(document.getElementById("charInitInput"+currentCharIndex[i]) /*&& parseInt(document.getElementById("charInitInput"+curentCharIndex[i]).value) == currentMax*/){
+			initiativeInput = document.getElementById("charInitInput"+currentCharIndex[i])
+			initiative = parseInt(initiativeInput.value);
+			if (initiative > 10) initiativeInput.value = initiative - 10;
+			else initiativeInput.value = 0;
+		}
+	}
 }
 
 function clearRound(){
-	for(var i=0; i<initArray.length; i++){
+	var parent=document.getElementById("charMasterContainer");
+	for(var i=0; i<counter; i++){
 		document.getElementById("charInitInput"+i).value = "";
 	}
 	currentCharParentDiv = null;
@@ -130,29 +141,54 @@ function clearRound(){
 
 function findMax(){
 	var max=0;
-	for(var i=0;i<initArray.length; i++){
-		if(initArray[i]>initArray[max] && initArray[i] > 0) max=i;
-	}
-	if(initArray[max] <= 0){
-		currentCharParentDiv.setAttribute("class", "charContainer");
-		clearRound();
-	}
-	else{
-		var newCharParentDiv = document.getElementById("charContainer"+max);
-		if(newCharParentDiv.getAttribute("class") == "charContainer") newCharParentDiv.setAttribute("class", "charContainerSelected");
-		else newCharParentDiv.setAttribute("class", "charContainerNpcSelected");
-		if(currentCharParentDiv != null){
-			if(currentCharParentDiv.getAttribute("class") == "charContainerSelected") currentCharParentDiv.setAttribute("class", "charContainer");
-			else currentCharParentDiv.setAttribute("class", "charContainerNpc");
+	var maxInit = [];
+	var parent=document.getElementById("charMasterContainer");
+	for(var i=0;i<counter; i++){
+		if(parseInt(document.getElementById("charInitInput"+i).value) >= parseInt(document.getElementById("charInitInput"+max).value)){
+			if(parseInt(document.getElementById("charInitInput"+i).value) > parseInt(document.getElementById("charInitInput"+max).value)) maxInit = [];
+			max = i;
+			currentMax = parseInt(document.getElementById("charInitInput"+i).value);
+			maxInit.push(i);
 		}
-		currentCharParentDiv = newCharParentDiv;
-		currentCharIndex = max;
+	}
+	
+	//--------------Clear Previous Characters' Highlight---------------
+	for(var i=0; i<counter; i++){
+		if(document.getElementById("charContainer"+i).getAttribute("class") == "charContainerSelected") document.getElementById("charContainer"+i).setAttribute("class", "charContainer");
+		else if(document.getElementById("charContainer"+i).getAttribute("class") == "charContainerNpcSelected") document.getElementById("charContainer"+i).setAttribute("class", "charContainerNpc");
+	}
+	
+	if(parseInt(document.getElementById("charInitInput"+max).value) <= 0) clearRound();
+	else{
+		currentCharIndex = [];
+		for(var i=0; i<maxInit.length; i++){
+			document.getElementById("charContainer"+maxInit[i]).setAttribute("class", document.getElementById("charContainer"+maxInit[i]).getAttribute("class") + "Selected");
+			currentCharIndex[i] = maxInit[i];
+		}
 	}
 }
 
+function deleteChar(index){
+	//------------Remove the Element------------
+	document.getElementById("charContainer" + index).parentElement.removeChild(document.getElementById("charContainer" + index));
+	//------------All the numbered elements have their numbers set one back-----------
+	for(var i=index+1; i<counter; i++){
+		document.getElementById("charContainer" + i).setAttribute("id", "charContainer" + (i-1));
+		document.getElementById("charInitInput" + i).setAttribute("id", "charInitInput" + (i-1));
+		document.getElementById("charDelButton" + i).setAttribute("onClick", "deleteChar("+(i-1)+")");
+		document.getElementById("charDelButton" + i).setAttribute("id", "charDelButton" + (i-1));
+	}
+	//-------------If such elements are mentioned in currentCharIndex, those references (counter numbers) have to be set one back too.
+	for(var i=0; i<currentCharIndex.length; i++){
+		if(currentCharIndex[i]>parseInt(index) || currentCharIndex[i] == parseInt(index)) currentCharIndex[i]--;
+			//----------If the element deleted is referenced to in the currentCharIndex, remove it from the array and since the next element instantly jumps into the deleted element's place, have i-- so it would go through the element and not skip it.
+			if(currentCharIndex[i] == parseInt(index-1)) currentCharIndex.splice(i--, 1);
+	}
+	counter--;
+}
+
 function nextPhase(){
-	if(currentCharParentDiv!=null) subtract10();
-	fillArray();
-	if(charInitInputGood) findMax();
+	if(currentCharIndex!=null) subtract10();
+	findMax();
 	
 }
