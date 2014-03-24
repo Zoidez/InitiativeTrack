@@ -52,6 +52,10 @@ function addChar(charNameAtt, npcSelectedAtt){
 	var name = document.createElement("div");
 	var initiativeContainer = document.createElement("div");
 	var initiative = document.createElement("input");
+	var sub5Container = document.createElement("div");
+	var sub5 = document.createElement("button");
+	var sub10Container = document.createElement("div");
+	var sub10 = document.createElement("button");
 	
 	//-----------Assigning the classes and ids to the elements-----------
 	if(npcSelectedAtt) parentDiv.setAttribute("class", "charContainerNpc");
@@ -66,11 +70,19 @@ function addChar(charNameAtt, npcSelectedAtt){
 	initiativeContainer.setAttribute("id", "charInit");
 	initiative.setAttribute("class", "charInitInput");
 	initiative.setAttribute("id", "charInitInput"+counter);
+	sub5Container.setAttribute("id", "subContainer");
+	sub5.setAttribute("id", "sub5Button");
+	sub5.setAttribute("onClick", "sub("+counter+", 5)");
+	sub10Container.setAttribute("id", "subContainer");
+	sub10.setAttribute("id", "sub10Button");
+	sub10.setAttribute("onClick", "sub("+counter+", 10)");
 	counter++;
 	
 	//-----------Filling the elements-----------
-	name.innerHTML = charNameAtt;
 	delMinus.innerHTML = "-";
+	name.innerHTML = charNameAtt;
+	sub5.innerHTML = "-5";
+	sub10.innerHTML = "-10";
 	
 	//-----------Getting the parent element to insert into-----------
 	var insertChar = document.getElementById("charMasterContainer");
@@ -82,7 +94,12 @@ function addChar(charNameAtt, npcSelectedAtt){
 	parentDiv.appendChild(name);
 	initiativeContainer.appendChild(initiative);
 	parentDiv.appendChild(initiativeContainer);
+	sub5Container.appendChild(sub5);
+	parentDiv.appendChild(sub5Container);
+	sub10Container.appendChild(sub10);
+	parentDiv.appendChild(sub10Container);
 	insertChar.appendChild(parentDiv);
+	
 }
 
 function animateBorder(element){
@@ -117,17 +134,22 @@ function borderColorChange(element){
 	}
 }*/
 
-function subtract10(){
+function subtract10(index){
 	var initiativeInput;
 	var initiative;
 	for(var i=0; i<currentCharIndex.length; i++){
 		if(document.getElementById("charInitInput"+currentCharIndex[i]) /*&& parseInt(document.getElementById("charInitInput"+curentCharIndex[i]).value) == currentMax*/){
-			initiativeInput = document.getElementById("charInitInput"+currentCharIndex[i])
-			initiative = parseInt(initiativeInput.value);
-			if (initiative > 10) initiativeInput.value = initiative - 10;
-			else initiativeInput.value = 0;
+			sub(currentCharIndex[i], 10);
 		}
 	}
+
+}
+
+function sub(index, sub){
+	initiativeInput = document.getElementById("charInitInput" + index)
+	initiative = parseInt(initiativeInput.value);
+	if (initiative > parseInt(sub)) initiativeInput.value = initiative - sub;
+	else initiativeInput.value = 0;
 }
 
 function clearRound(){
@@ -188,7 +210,7 @@ function deleteChar(index){
 }
 
 function nextPhase(){
-	if(currentCharIndex!=null) subtract10();
+	if(currentCharIndex!=null) subtract10(null);
 	findMax();
 	
 }

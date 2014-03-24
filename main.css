@@ -142,13 +142,31 @@ hr {
 	font-weight: bold;
 }
 
-#charName, #charInit {
-	width: 20%;
+#charName, #charInit, #subContainer {
 	float: left;
+}
+
+#charName{
+	width: 20%;
+}
+
+#charInit{
 }
 
 .charInitInput {
 	width: 31px;
+}
+
+#subContainer{
+	padding-left: 10px;
+}
+#sub5Button{
+	width: 31px;
+	padding-left: 2px;
+}
+ #sub10Button{
+	width: 44px;
+	padding-left: 3px;
 }
 
 #formSeparator {
