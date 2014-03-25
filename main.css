@@ -156,20 +156,34 @@ hr {
 }
 
 #charInit{
+	position: relative;
 }
 
 .charInitInput {
 	width: 31px;
 }
 
+.charInitFloat {
+	visibility: hidden;
+	position: absolute;
+	left: 2px;
+	top: 3px;
+	float: left;
+	color: #FF6666;
+	font-weight: bold;
+	text-shadow: 0px 0px 5px #FF6666;
+}
+
 #subContainer{
 	padding-left: 10px;
 }
-#sub5Button{
+
+.sub5Button{
 	width: 31px;
 	padding-left: 2px;
 }
- #sub10Button{
+
+ .sub10Button{
 	width: 44px;
 	padding-left: 3px;
 }
