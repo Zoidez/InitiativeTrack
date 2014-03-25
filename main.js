@@ -58,8 +58,8 @@ function addChar(charNameAtt, npcSelectedAtt){
 	var sub10 = document.createElement("button");
 	
 	//-----------Assigning the classes and ids to the elements-----------
-	if(npcSelectedAtt) parentDiv.setAttribute("class", "charContainerNpc");
-	else  parentDiv.setAttribute("class", "charContainer");
+	if(npcSelectedAtt) parentDiv.setAttribute("class", "charContainerNpc-10");
+	else  parentDiv.setAttribute("class", "charContainer-10");
 	parentDiv.setAttribute("id", "charContainer"+counter);
 	delButtonContainer.setAttribute("id", "charDel");
 	delButton.setAttribute("class", "charDelButton");
@@ -76,7 +76,6 @@ function addChar(charNameAtt, npcSelectedAtt){
 	sub10Container.setAttribute("id", "subContainer");
 	sub10.setAttribute("id", "sub10Button");
 	sub10.setAttribute("onClick", "sub("+counter+", 10)");
-	counter++;
 	
 	//-----------Filling the elements-----------
 	delMinus.innerHTML = "-";
@@ -100,6 +99,8 @@ function addChar(charNameAtt, npcSelectedAtt){
 	parentDiv.appendChild(sub10Container);
 	insertChar.appendChild(parentDiv);
 	
+	animateCharVertical(counter, 35);	
+	counter++;
 }
 
 function animateBorder(element){
@@ -118,6 +119,40 @@ function borderColorChange(element){
 		element.setAttribute("style", "border-color: #FF8888;");
 		isRed = true;
 	}
+}
+
+function animateCharVertical(index, height){
+	var end;
+	var classElement = document.getElementById("charContainer"+index).getAttribute("class");
+	if(height == 0){
+		height = 0;
+		end = 35;
+		var interval = window.setInterval(function(){
+			document.getElementById("charContainer"+index).setAttribute("class", "charContainer" + (end - height*2));
+			height++;
+			if((end - height*2) <= -10){
+				window.clearInterval(interval);
+				if(classElement == "charContainer") document.getElementById("charContainer"+index).setAttribute("class", "charContainer-10");
+				else document.getElementById("charContainer"+index).setAttribute("class", "charContainerNPC-10");
+			}
+		}, 1);
+	}
+	else{
+		end = height;
+		height = 0;
+		var interval = window.setInterval(function(){
+			document.getElementById("charContainer"+index).setAttribute("class", "charContainer" + (height*2));
+			height++;
+			if((height*2) >= end){
+				window.clearInterval(interval);
+				if(classElement == "charContainer0") document.getElementById("charContainer"+index).setAttribute("class", "charContainer");
+				else document.getElementById("charContainer"+index).setAttribute("class", "charContainerNPC");
+			}
+		}, 1);
+			
+			//document.getElementById("charContainer"+index).style.height = height + "px";
+	}
+	
 }
 
 
@@ -191,22 +226,26 @@ function findMax(){
 }
 
 function deleteChar(index){
+	//------------Animate the Removal------------
+	animateCharVertical(index, 0);
 	//------------Remove the Element------------
-	document.getElementById("charContainer" + index).parentElement.removeChild(document.getElementById("charContainer" + index));
+	setTimeout(function(){
+		document.getElementById("charContainer" + index).parentElement.removeChild(document.getElementById("charContainer" + index));
 	//------------All the numbered elements have their numbers set one back-----------
-	for(var i=index+1; i<counter; i++){
-		document.getElementById("charContainer" + i).setAttribute("id", "charContainer" + (i-1));
-		document.getElementById("charInitInput" + i).setAttribute("id", "charInitInput" + (i-1));
-		document.getElementById("charDelButton" + i).setAttribute("onClick", "deleteChar("+(i-1)+")");
-		document.getElementById("charDelButton" + i).setAttribute("id", "charDelButton" + (i-1));
-	}
+		for(var i=index+1; i<counter; i++){
+			document.getElementById("charContainer" + i).setAttribute("id", "charContainer" + (i-1));
+			document.getElementById("charInitInput" + i).setAttribute("id", "charInitInput" + (i-1));
+			document.getElementById("charDelButton" + i).setAttribute("onClick", "deleteChar("+(i-1)+")");
+			document.getElementById("charDelButton" + i).setAttribute("id", "charDelButton" + (i-1));
+		}
 	//-------------If such elements are mentioned in currentCharIndex, those references (counter numbers) have to be set one back too.
-	for(var i=0; i<currentCharIndex.length; i++){
-		if(currentCharIndex[i]>parseInt(index) || currentCharIndex[i] == parseInt(index)) currentCharIndex[i]--;
-			//----------If the element deleted is referenced to in the currentCharIndex, remove it from the array and since the next element instantly jumps into the deleted element's place, have i-- so it would go through the element and not skip it.
+		for(var i=0; i<currentCharIndex.length; i++){
+			if(currentCharIndex[i]>parseInt(index) || currentCharIndex[i] == parseInt(index)) currentCharIndex[i]--;
+	//----------If the element deleted is referenced to in the currentCharIndex, remove it from the array and since the next element instantly jumps into the deleted element's place, have i-- so it would go through the element and not skip it.
 			if(currentCharIndex[i] == parseInt(index-1)) currentCharIndex.splice(i--, 1);
-	}
-	counter--;
+		}
+		counter--;
+	}, 300);
 }
 
 function nextPhase(){
