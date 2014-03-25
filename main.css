@@ -143,12 +143,28 @@ hr {
 }
 
 #charName, #charInit {
-	width: 20%;
 	float: left;
+}
+
+#charName {
+	width: 20%;
+}
+
+#charInit {
+	position: relative;
 }
 
 .charInitInput {
 	width: 31px;
+}
+
+#charInitFloat {
+	#visibility: hidden;
+	position: absolute;
+	left: 2px;
+	top: 3px;
+	float: left;
+	color: #FF0000;
 }
 
 #formSeparator {
