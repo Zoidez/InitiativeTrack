@@ -52,15 +52,17 @@ function addChar(charNameAtt, npcSelectedAtt){
 	var name = document.createElement("div");
 	var initiativeContainer = document.createElement("div");
 	var initiative = document.createElement("input");
+	var floatNumber = document.createElement("div");
 	var sub5Container = document.createElement("div");
 	var sub5 = document.createElement("button");
 	var sub10Container = document.createElement("div");
 	var sub10 = document.createElement("button");
 	
 	//-----------Assigning the classes and ids to the elements-----------
-	if(npcSelectedAtt) parentDiv.setAttribute("class", "charContainerNpc-10");
-	else  parentDiv.setAttribute("class", "charContainer-10");
+	if(npcSelectedAtt) parentDiv.setAttribute("class", "charContainerNpc");
+	else  parentDiv.setAttribute("class", "charContainer");
 	parentDiv.setAttribute("id", "charContainer"+counter);
+	parentDiv.style.height = "0";
 	delButtonContainer.setAttribute("id", "charDel");
 	delButton.setAttribute("class", "charDelButton");
 	delButton.setAttribute("id", "charDelButton"+counter);
@@ -70,16 +72,21 @@ function addChar(charNameAtt, npcSelectedAtt){
 	initiativeContainer.setAttribute("id", "charInit");
 	initiative.setAttribute("class", "charInitInput");
 	initiative.setAttribute("id", "charInitInput"+counter);
+	floatNumber.setAttribute("class", "charInitFloat");
+	floatNumber.setAttribute("id", "charInitFloat"+counter);
 	sub5Container.setAttribute("id", "subContainer");
-	sub5.setAttribute("id", "sub5Button");
+	sub5.setAttribute("class", "sub5Button");
+	sub5.setAttribute("id", "sub5Button"+counter);
 	sub5.setAttribute("onClick", "sub("+counter+", 5)");
 	sub10Container.setAttribute("id", "subContainer");
-	sub10.setAttribute("id", "sub10Button");
+	sub10.setAttribute("class", "sub10Button");
+	sub10.setAttribute("id", "sub10Button"+counter);
 	sub10.setAttribute("onClick", "sub("+counter+", 10)");
 	
 	//-----------Filling the elements-----------
 	delMinus.innerHTML = "-";
 	name.innerHTML = charNameAtt;
+	floatNumber.innerHTML = "10";
 	sub5.innerHTML = "-5";
 	sub10.innerHTML = "-10";
 	
@@ -92,6 +99,7 @@ function addChar(charNameAtt, npcSelectedAtt){
 	parentDiv.appendChild(delButtonContainer);
 	parentDiv.appendChild(name);
 	initiativeContainer.appendChild(initiative);
+	initiativeContainer.appendChild(floatNumber);
 	parentDiv.appendChild(initiativeContainer);
 	sub5Container.appendChild(sub5);
 	parentDiv.appendChild(sub5Container);
@@ -99,7 +107,7 @@ function addChar(charNameAtt, npcSelectedAtt){
 	parentDiv.appendChild(sub10Container);
 	insertChar.appendChild(parentDiv);
 	
-	animateCharVertical(counter, 35);	
+	animateCharVertical(counter, true);	
 	counter++;
 }
 
@@ -121,38 +129,59 @@ function borderColorChange(element){
 	}
 }
 
-function animateCharVertical(index, height){
+function animateCharVertical(index, unroll){
+	
 	var end;
-	var classElement = document.getElementById("charContainer"+index).getAttribute("class");
-	if(height == 0){
+	var height;
+	var element = document.getElementById("charContainer"+index);
+	if(unroll){
 		height = 0;
 		end = 35;
 		var interval = window.setInterval(function(){
-			document.getElementById("charContainer"+index).setAttribute("class", "charContainer" + (end - height*2));
-			height++;
-			if((end - height*2) <= -10){
+			element.style.height = (height + "px");
+			height+=2;
+			if(height >= end){
 				window.clearInterval(interval);
-				if(classElement == "charContainer") document.getElementById("charContainer"+index).setAttribute("class", "charContainer-10");
-				else document.getElementById("charContainer"+index).setAttribute("class", "charContainerNPC-10");
+				element.style.height = "35px";
 			}
 		}, 1);
 	}
 	else{
-		end = height;
-		height = 0;
+		height = 35;
+		end = 0;
 		var interval = window.setInterval(function(){
-			document.getElementById("charContainer"+index).setAttribute("class", "charContainer" + (height*2));
-			height++;
-			if((height*2) >= end){
+			element.style.height = (height + "px");
+			height-=2;
+			if(height <= end){
 				window.clearInterval(interval);
-				if(classElement == "charContainer0") document.getElementById("charContainer"+index).setAttribute("class", "charContainer");
-				else document.getElementById("charContainer"+index).setAttribute("class", "charContainerNPC");
+				element.style.height = "0px";
+				element.style.padding = "0px";
 			}
 		}, 1);
 			
 			//document.getElementById("charContainer"+index).style.height = height + "px";
 	}
 	
+}
+
+function animateFloat(index, damage){
+	var top = 3;
+	var opacity = 1;
+	var element = document.getElementById("charInitFloat"+index);
+	element.innerHTML = damage;
+	element.style.visibility = "visible";
+	var interval = window.setInterval(function(){
+		element.style.top = (top + "px");
+		element.style.opacity = opacity;
+		top--;
+		opacity-=0.075
+		if(top <= -17){
+			window.clearInterval(interval);
+			element.style.top = "3px";
+			element.style.opacity = "1";
+			element.style.visibility = "hidden";
+		}
+	}, 30);
 }
 
 
@@ -183,8 +212,14 @@ function subtract10(index){
 function sub(index, sub){
 	initiativeInput = document.getElementById("charInitInput" + index)
 	initiative = parseInt(initiativeInput.value);
-	if (initiative > parseInt(sub)) initiativeInput.value = initiative - sub;
-	else initiativeInput.value = 0;
+	if (initiative > parseInt(sub)){
+		initiativeInput.value = initiative - sub;
+		animateFloat(index, sub);
+	}
+	else{
+		animateFloat(index, initiativeInput.value);
+		initiativeInput.value = 0;
+	}
 }
 
 function clearRound(){
@@ -227,7 +262,7 @@ function findMax(){
 
 function deleteChar(index){
 	//------------Animate the Removal------------
-	animateCharVertical(index, 0);
+	animateCharVertical(index, false);
 	//------------Remove the Element------------
 	setTimeout(function(){
 		document.getElementById("charContainer" + index).parentElement.removeChild(document.getElementById("charContainer" + index));
@@ -237,12 +272,17 @@ function deleteChar(index){
 			document.getElementById("charInitInput" + i).setAttribute("id", "charInitInput" + (i-1));
 			document.getElementById("charDelButton" + i).setAttribute("onClick", "deleteChar("+(i-1)+")");
 			document.getElementById("charDelButton" + i).setAttribute("id", "charDelButton" + (i-1));
+			document.getElementById("sub5Button" + i).setAttribute("onClick", "sub("+(i-1)+", 5)");
+			document.getElementById("sub5Button" + i).setAttribute("id", "sub5Button" + (i-1));
+			document.getElementById("sub10Button" + i).setAttribute("onClick", "sub("+(i-1)+", 10)");
+			document.getElementById("sub10Button" + i).setAttribute("id", "sub10Button" + (i-1));
+			document.getElementById("charInitFloat" + i).setAttribute("id", "charInitFloat" + (i-1));
 		}
 	//-------------If such elements are mentioned in currentCharIndex, those references (counter numbers) have to be set one back too.
 		for(var i=0; i<currentCharIndex.length; i++){
 			if(currentCharIndex[i]>parseInt(index) || currentCharIndex[i] == parseInt(index)) currentCharIndex[i]--;
 	//----------If the element deleted is referenced to in the currentCharIndex, remove it from the array and since the next element instantly jumps into the deleted element's place, have i-- so it would go through the element and not skip it.
-			if(currentCharIndex[i] == parseInt(index-1)) currentCharIndex.splice(i--, 1);
+			if(currentCharIndex[i] == parseInt(index-1)) currentCharIndex.splice(--i, 1);
 		}
 		counter--;
 	}, 300);
