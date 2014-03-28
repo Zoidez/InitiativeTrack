@@ -7,129 +7,64 @@ var initArray = new Array(); //used in fillArray(), subtract10(), findMax()
 var currentCharParentDiv; //used in findMax(), nextPhase()
 var currentCharIndex = []; //used in findMax(), nextPhase()
 var currentMax;
+var chars = [];
 
 var charInitInputGood;
 
-//onLoad(setTimeout(function(){fillContent()}, 1000));
+onLoad(setTimeout(function(){fillContent()}, 1000));
 
-
+//Script's
 function fillContent(){
 	addChar("Alvaro", false);
-	addChar("Ohm", true);
-	addChar("#1", true);
-	addChar("#2", true);
-	addChar("#3", false);
+	//addChar("Ohm", true);
+	//addChar("#1", true);
+	//addChar("#2", true);
+	//addChar("#3", false);
 	
-	document.getElementById("charInitInput0").value = "12";
-	document.getElementById("charInitInput1").value = "16";
-	document.getElementById("charInitInput2").value = "32";
-	document.getElementById("charInitInput3").value = "30";
-	document.getElementById("charInitInput4").value = "31";
+	chars[0].initiative.value = "12";
+	//chars[1].initiative.value = "16";
+	//chars[2].initiative.value = "32";
+	//chars[3].initiative.value = "30";
+	//chars[4].initiative.value = "31";
 }
 
+//Script's
 function checkForm() {
-	charName = document.getElementById("charNameInput");
-	
+	var charName = document.getElementById("charNameInput");
 	var npc = document.getElementById("CharNPCSelect");
-	var npcSelected;
-	npcSelected =(npc.options[npc.selectedIndex].value === "npc");
+	var npcSelected =(npc.options[npc.selectedIndex].value == "npc");
 	
 	if(charName.value == "" || charName.value == null) animateBorder(charName);
-	else addChar(charName.value, npcSelected);
-	
+	else {
+		addChar(charName.value, npc);
+	}
 	charName.value = "";
 }
 
-
-
-function addChar(charNameAtt, npcSelectedAtt){
-	
-	//-----------Creating the elements-----------
-	var parentDiv = document.createElement("div");
-	var delButtonContainer = document.createElement("div");
-	var delButton = document.createElement("button");
-	var delMinus = document.createElement("div");
-	var name = document.createElement("div");
-	var initiativeContainer = document.createElement("div");
-	var initiative = document.createElement("input");
-	var floatNumber = document.createElement("div");
-	var sub5Container = document.createElement("div");
-	var sub5 = document.createElement("button");
-	var sub10Container = document.createElement("div");
-	var sub10 = document.createElement("button");
-	
-	//-----------Assigning the classes and ids to the elements-----------
-	if(npcSelectedAtt) parentDiv.setAttribute("class", "charContainerNpc");
-	else  parentDiv.setAttribute("class", "charContainer");
-	parentDiv.setAttribute("id", "charContainer"+counter);
-	parentDiv.style.height = "0";
-	delButtonContainer.setAttribute("id", "charDel");
-	delButton.setAttribute("class", "charDelButton");
-	delButton.setAttribute("id", "charDelButton"+counter);
-	delButton.setAttribute("onClick", "deleteChar("+counter+")");
-	delMinus.setAttribute("id", "charDelMinus");
-	name.setAttribute("id", "charName");
-	initiativeContainer.setAttribute("id", "charInit");
-	initiative.setAttribute("class", "charInitInput");
-	initiative.setAttribute("id", "charInitInput"+counter);
-	floatNumber.setAttribute("class", "charInitFloat");
-	floatNumber.setAttribute("id", "charInitFloat"+counter);
-	sub5Container.setAttribute("id", "subContainer");
-	sub5.setAttribute("class", "sub5Button");
-	sub5.setAttribute("id", "sub5Button"+counter);
-	sub5.setAttribute("onClick", "sub("+counter+", 5)");
-	sub10Container.setAttribute("id", "subContainer");
-	sub10.setAttribute("class", "sub10Button");
-	sub10.setAttribute("id", "sub10Button"+counter);
-	sub10.setAttribute("onClick", "sub("+counter+", 10)");
-	
-	//-----------Filling the elements-----------
-	delMinus.innerHTML = "-";
-	name.innerHTML = charNameAtt;
-	floatNumber.innerHTML = "10";
-	sub5.innerHTML = "-5";
-	sub10.innerHTML = "-10";
-	
-	//-----------Getting the parent element to insert into-----------
-	var insertChar = document.getElementById("charMasterContainer");
-	
-	//-----------Inserting the elements-----------
-	delButton.appendChild(delMinus);
-	delButtonContainer.appendChild(delButton);
-	parentDiv.appendChild(delButtonContainer);
-	parentDiv.appendChild(name);
-	initiativeContainer.appendChild(initiative);
-	initiativeContainer.appendChild(floatNumber);
-	parentDiv.appendChild(initiativeContainer);
-	sub5Container.appendChild(sub5);
-	parentDiv.appendChild(sub5Container);
-	sub10Container.appendChild(sub10);
-	parentDiv.appendChild(sub10Container);
-	insertChar.appendChild(parentDiv);
-	
-	animateCharVertical(counter, true);	
-	counter++;
+function addChar(charName, npc){
+	var newChar = new character(charName, npc, chars.length);
+	chars.push(newChar);
+	//alert(chars.length + "\n" + chars[(chars.length-1)].npc);
 }
 
-function animateBorder(element){
-	var animate = setInterval(function(){borderColorChange(element)}, 100);
+//Script's. Since this function receives charInitInput as well as charAddInput, we can have it outside the class and call animateBorder(chars[i]) instead of chars[i].animateBorder(). Same thing but then we shall not have to write animateBorder twice.
+/*function animateBorder(element){
+	var isRed = false;
+	var animate = setInterval(function(){
+		if(isRed === true){
+			element.style.borderColor = "#88A8B7";
+			isRed = false;
+		}
+		else{
+			element.style.borderColor = "#FF8888";
+			isRed = true;
+		}
+	}, 100);
 	setTimeout(function(){clearInterval(animate)}, 900);
-	setTimeout(function(){element.setAttribute("style", "border-color: #88A8B7;")}, 1000);
+	setTimeout(function(){element.style.border-color = "#88A8B7"}, 1000);
 }
-
-
-function borderColorChange(element){
-	if(isRed === true){
-		element.setAttribute("style", "border-color: #88A8B7;");
-		isRed = false;
-	}
-	else{
-		element.setAttribute("style", "border-color: #FF8888;");
-		isRed = true;
-	}
-}
-
-function animateCharVertical(index, unroll){
+//Object's
+/*function animateCharVertical(index, unroll){
 	
 	var end;
 	var height;
@@ -164,6 +99,7 @@ function animateCharVertical(index, unroll){
 	
 }
 
+//Object's
 function animateFloat(index, damage){
 	var top = 3;
 	var opacity = 1;
@@ -198,18 +134,20 @@ function animateFloat(index, damage){
 	}
 }*/
 
-function subtract10(index){
+//Object's
+/*function subtract10(index){
 	var initiativeInput;
 	var initiative;
 	for(var i=0; i<currentCharIndex.length; i++){
-		if(document.getElementById("charInitInput"+currentCharIndex[i]) /*&& parseInt(document.getElementById("charInitInput"+curentCharIndex[i]).value) == currentMax*/){
+		if(document.getElementById("charInitInput"+currentCharIndex[i]) /*&& parseInt(document.getElementById("charInitInput"+curentCharIndex[i]).value) == currentMax*//*){
 			sub(currentCharIndex[i], 10);
 		}
 	}
 
 }
 
-function sub(index, sub){
+//Object's
+/*function sub(index, sub){
 	initiativeInput = document.getElementById("charInitInput" + index)
 	initiative = parseInt(initiativeInput.value);
 	if (initiative > parseInt(sub)){
@@ -222,6 +160,7 @@ function sub(index, sub){
 	}
 }
 
+//Script's
 function clearRound(){
 	var parent=document.getElementById("charMasterContainer");
 	for(var i=0; i<counter; i++){
@@ -231,6 +170,7 @@ function clearRound(){
 	currentCharIndex = null;
 }
 
+//Script's
 function findMax(){
 	var max=0;
 	var maxInit = [];
@@ -260,6 +200,7 @@ function findMax(){
 	}
 }
 
+//The content is object's, the interface is script's because the object's index is passed and there is no other way around it that I want to deal with right now.
 function deleteChar(index){
 	//------------Animate the Removal------------
 	animateCharVertical(index, false);
@@ -288,8 +229,9 @@ function deleteChar(index){
 	}, 300);
 }
 
+//Script's
 function nextPhase(){
 	if(currentCharIndex!=null) subtract10(null);
 	findMax();
 	
-}
+}*/
