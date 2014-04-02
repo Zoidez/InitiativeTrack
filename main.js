@@ -282,7 +282,7 @@ function deleteChar(index){
 		for(var i=0; i<currentCharIndex.length; i++){
 			if(currentCharIndex[i]>parseInt(index) || currentCharIndex[i] == parseInt(index)) currentCharIndex[i]--;
 	//----------If the element deleted is referenced to in the currentCharIndex, remove it from the array and since the next element instantly jumps into the deleted element's place, have i-- so it would go through the element and not skip it.
-			if(currentCharIndex[i] == parseInt(index-1)) currentCharIndex.splice(--i, 1);
+			if(currentCharIndex[i] == parseInt(index-1)) currentCharIndex.splice(i--, 1);
 		}
 		counter--;
 	}, 300);
