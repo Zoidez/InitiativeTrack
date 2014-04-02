@@ -1,7 +1,15 @@
 function character(charNameAtt, npcSelectedAtt, counter){
 
+	//-----------Creating the HTML-independent fields-----------
+	this.npc = npcSelectedAtt;
+	this.isHighlighted = false;
+
 	//-----------Initializing the methods-----------
 	this.animateCharVertical = animateCharVertical;
+	this.animateFloat = animateFloat;
+	this.sub = sub;
+	this.highlight = highlight;
+	this.del = del;
 
 	//-----------Creating the HTML fields-----------
 	this.parentDiv = document.createElement("div");
@@ -17,19 +25,15 @@ function character(charNameAtt, npcSelectedAtt, counter){
 	this.sub10Container = document.createElement("div");
 	this.sub10 = document.createElement("button");
 
-	//-----------Creating the HTML-independent fields-----------
-	this.npc = npcSelectedAtt;
-	this.isHighlighted = false;
-
 	//-----------Assigning the classes and ids to the elements-----------
 	if(npcSelectedAtt) this.parentDiv.setAttribute("class", "charContainerNpc");
 	else this.parentDiv.setAttribute("class", "charContainer");
-	this.parentDiv.setAttribute("id", "charContainer");
+	this.parentDiv.setAttribute("id", counter);
 	this.parentDiv.style.height = "0";
 	this.delButtonContainer.setAttribute("id", "charDel");
 	this.delButton.setAttribute("class", "charDelButton");
 	this.delButton.setAttribute("id", "charDelButton");
-	this.delButton.setAttribute("onClick", "deleteChar("+counter+")");
+	this.delButton.setAttribute("onClick", "deleteChar(this.parentElement.parentElement.id)");
 	this.delMinus.setAttribute("id", "charDelMinus");
 	this.name.setAttribute("id", "charName");
 	this.initiativeContainer.setAttribute("id", "charInit");
@@ -40,11 +44,11 @@ function character(charNameAtt, npcSelectedAtt, counter){
 	this.sub5Container.setAttribute("id", "subContainer");
 	this.sub5.setAttribute("class", "sub5Button");
 	this.sub5.setAttribute("id", "sub5Button");
-	this.sub5.setAttribute("onClick", "sub("+counter+", 5)");
+	this.sub5.setAttribute("onClick", "chars[this.parentElement.parentElement.id].sub(5)");
 	this.sub10Container.setAttribute("id", "subContainer");
 	this.sub10.setAttribute("class", "sub10Button");
 	this.sub10.setAttribute("id", "sub10Button");
-	this.sub10.setAttribute("onClick", "sub("+counter+", 10)");
+	this.sub10.setAttribute("onClick", "chars[this.parentElement.parentElement.id].sub(10)");
 
 	//-----------Filling the elements-----------
 	this.delMinus.innerHTML = "-";
@@ -73,7 +77,7 @@ function character(charNameAtt, npcSelectedAtt, counter){
 	this.animateCharVertical(true);
 	//counter++;
 
-	//END of Constructor. FUNCTIONS from here.
+	//END of Constructor. METHODS from here.
 	function animateCharVertical(unroll){
 		var element = this;
 		var end;
@@ -104,5 +108,48 @@ function character(charNameAtt, npcSelectedAtt, counter){
 			}, 1);
 			//document.getElementById("charContainer"+index).style.height = height + "px";
 		}
+	}
+	function animateFloat(damage){
+		var top = 3;
+		var opacity = 1;
+		var element = this.floatNumber;
+		element.innerHTML = damage;
+		element.style.visibility = "visible";
+		var interval = window.setInterval(function(){
+			element.style.top = (top + "px");
+			element.style.opacity = opacity;
+			top--;
+			opacity-=0.075
+			if(top <= -17){
+				window.clearInterval(interval);
+				element.style.top = "3px";
+				element.style.opacity = "1";
+				element.style.visibility = "hidden";
+			}
+		}, 30);
+	}
+	function sub(sub){
+		var parentElement = this;
+		var element = this.initiative;
+		if (parseInt(element.value) > parseInt(sub)){
+			element.value = parseInt(element.value) - sub;
+			parentElement.animateFloat(sub);
+		}
+		else{
+			parentElement.animateFloat(element.value);
+			element.value = 0;
+		}
+	}
+	function highlight(highlight){
+		element = this.parentDiv;
+		this.isHighlighted = highlight;
+		if(highlight) this.parentDiv.setAttribute("class", "charContainerSelected");
+		else{
+			if(element.npc) this.parentDiv.setAttribute("class", "charContainerNPC");
+			else this.parentDiv.setAttribute("class", "charContainer");
+		}
+	}
+	function del(){
+		this.parentDiv.parentElement.removeChild(this.parentDiv);
 	}
 }
