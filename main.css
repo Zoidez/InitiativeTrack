@@ -40,6 +40,7 @@ hr {
 	color: #CDDAE0;
 }
 
+
 ::-webkit-input-placeholder { /* WebKit browsers */
     color:    #CDDAE0;
 }
@@ -101,7 +102,7 @@ hr {
 	font-weight: bold;
 }
 
-.charContainer, .charContainerNpc, .charContainerSelected, .charContainerNpcSelected, #charContainerHeader {
+.charContainer, .charContainerNpc, .charContainerSelected, .charContainerHeader {
 	width: 100%;
 	height: 35px;
 	padding: 2px;
@@ -113,11 +114,6 @@ hr {
 }
 
 .charContainerSelected{
-	background-color: #CDFFCD;
-	color: #203B58;
-}
-
-.charContainerNpcSelected{
 	background-color: #CDFFCD;
 	color: #203B58;
 }
@@ -188,6 +184,7 @@ hr {
 	padding-left: 3px;
 }
 
+/*----------CharAddForm-----------*/
 #formSeparator {
 	width: 450px;
 	margin-left: 0px;
