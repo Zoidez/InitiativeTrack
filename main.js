@@ -12,7 +12,7 @@ function whenLoaded(){
 	window.charAddNpcInitD6 = document.getElementById("charNpcInitD6Input");
 	window.charAddRand = document.getElementById("charRandInit");
 	//Fill contents after half a second
-	setTimeout(function(){fillContent()}, 500)
+	//setTimeout(function(){fillContent()}, 500)
 }
 
 function fillContent(){
