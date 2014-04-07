@@ -94,7 +94,6 @@ hr {
 
 #charMasterContainer {
 	width: 100%;
-	/* height: 50%; */
 	text-align: left;
 }
 
@@ -157,6 +156,7 @@ hr {
 
 .charInitInput {
 	width: 31px;
+	margin-right: 0px;
 }
 
 .charInitFloat {
@@ -185,6 +185,9 @@ hr {
 }
 
 /*----------CharAddForm-----------*/
+#charAdd{
+	float: left;
+}
 #formSeparator {
 	width: 450px;
 	margin-left: 0px;
@@ -197,8 +200,37 @@ hr {
 	/* text-align: left;  */
 }
 
+#charNameInput, #charNpcSelect, #charAddNpcText, #charAddNpcInitMaster, #charAddNpcInit, #charAddButton, #charRandInit, #charRandInitButton{
+	float: left;
+	margin: 5px;
+}
+
+#charAddNpcInitMaster, #charAddNpcInit, #charRandInit{
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#charAddNpcInitMaster{
+	width: 0px;
+}
+
+#charAddNpcInit{
+	width: 146px;
+}
+
+#charNpcInitBaseInput, #charNpcInitD6Input{
+	float: left;
+	width: 31px;
+	margin: 5px;
+}
+
+#charRandInit{
+	width: 0px;
+}
+
 #nextButton {
 	width: 100px;
 	height: 50px;
-	margin-left: 30%;
+	#margin-left: 30%;
 }

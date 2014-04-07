@@ -1,8 +1,10 @@
-function character(charNameAtt, npcSelectedAtt, counter){
+function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, counter){
 
 	//-----------Creating the HTML-independent fields-----------
 	this.npc = npcSelectedAtt;
 	this.isHighlighted = false;
+	this.baseInit = parseInt(baseInit);
+	this.D6Init = parseInt(D6Init);
 
 	//-----------Initializing the methods-----------
 	this.animateCharVertical = animateCharVertical;
@@ -10,6 +12,7 @@ function character(charNameAtt, npcSelectedAtt, counter){
 	this.sub = sub;
 	this.highlight = highlight;
 	this.del = del;
+	this.randNpcInit = randNpcInit;
 
 	//-----------Creating the HTML fields-----------
 	this.parentDiv = document.createElement("div");
@@ -75,7 +78,6 @@ function character(charNameAtt, npcSelectedAtt, counter){
 	insertChar.appendChild(this.parentDiv);
 
 	this.animateCharVertical(true);
-	//counter++;
 
 	//END of Constructor. METHODS from here.
 	function animateCharVertical(unroll){
@@ -106,7 +108,35 @@ function character(charNameAtt, npcSelectedAtt, counter){
 					element.parentDiv.style.padding = "0px";
 				}
 			}, 1);
-			//document.getElementById("charContainer"+index).style.height = height + "px";
+		}
+	}
+	function randNpcInit(){
+		var init = 0;
+		for(var i=0; i<this.D6Init; i++){
+			init += Math.floor((Math.random()*6)+1);
+		}
+		init += this.baseInit;
+		this.initiative.value = init;
+	}
+	function highlight(highlight){
+		element = this.parentDiv;
+		this.isHighlighted = highlight;
+		if(highlight) this.parentDiv.setAttribute("class", "charContainerSelected");
+		else{
+			if(element.npc) this.parentDiv.setAttribute("class", "charContainerNPC");
+			else this.parentDiv.setAttribute("class", "charContainer");
+		}
+	}
+	function sub(sub){
+		var parentElement = this;
+		var element = this.initiative;
+		if (parseInt(element.value) > parseInt(sub)){
+			element.value = parseInt(element.value) - sub;
+			parentElement.animateFloat(sub);
+		}
+		else{
+			parentElement.animateFloat(element.value);
+			element.value = 0;
 		}
 	}
 	function animateFloat(damage){
@@ -127,27 +157,6 @@ function character(charNameAtt, npcSelectedAtt, counter){
 				element.style.visibility = "hidden";
 			}
 		}, 30);
-	}
-	function sub(sub){
-		var parentElement = this;
-		var element = this.initiative;
-		if (parseInt(element.value) > parseInt(sub)){
-			element.value = parseInt(element.value) - sub;
-			parentElement.animateFloat(sub);
-		}
-		else{
-			parentElement.animateFloat(element.value);
-			element.value = 0;
-		}
-	}
-	function highlight(highlight){
-		element = this.parentDiv;
-		this.isHighlighted = highlight;
-		if(highlight) this.parentDiv.setAttribute("class", "charContainerSelected");
-		else{
-			if(element.npc) this.parentDiv.setAttribute("class", "charContainerNPC");
-			else this.parentDiv.setAttribute("class", "charContainer");
-		}
 	}
 	function del(){
 		this.parentDiv.parentElement.removeChild(this.parentDiv);

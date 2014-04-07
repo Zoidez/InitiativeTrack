@@ -33,14 +33,21 @@
 <div id="charAdd">
 <!<form id="charAddForm">
 	<input id="charNameInput" placeholder="Character Name">
-	<select id="CharNPCSelect">
+	<select id="CharNPCSelect" onchange="animateNpcInit()">
 		<option value="player">Player</option>
 		<Option value="npc">NPC</option>
 	</select>
+	<div id="charAddNpcInitMaster"><div id="charAddNpcInit">
+		<input id="charNpcInitBaseInput"></input><div id="charAddNpcText">+</div>
+		<input id="charNpcInitD6Input"></input><div id="charAddNpcText">D6</div>
+	</div></div>
 	<button id="charAddButton" onClick="checkForm()">+</button>
-	<!--<button id="charAddButton" onClick="areHighlighted()">Test</button>-->
+	<div id="charRandInit">
+		<button id="charRandInitButton" onClick="randNpc()">Rand</button>
+	</div>
+	<!--<button id="charAddButton" onClick="randNpc()">Test</button>-->
 <!</form>
-</div>
+</div><br />
 
 <button id="nextButton" onClick="nextPhase()">Next></button>
 </BODY>
