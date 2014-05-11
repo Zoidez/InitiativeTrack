@@ -26,6 +26,10 @@ input, select, button {
 	outline: none;
 }
 
+button{
+	cursor: hand;
+}
+
 input:hover, select:hover, button:hover {
 	box-shadow: 0 0 7px #88A8B7;
 }
@@ -129,7 +133,7 @@ hr {
 	height: 28px;
 }
 
-.charDelButton:hover{
+.charDelButton:hover, #sceneDelButton:hover{
 	color: #FF6666;
 	border: 2px solid #FF6666;
 	box-shadow: 0 0 7px #FF6666;
@@ -200,12 +204,12 @@ hr {
 	/* text-align: left;  */
 }
 
-#charNameInput, #charNpcSelect, #charAddNpcText, #charAddNpcInitMaster, #charAddNpcInit, #charAddButton, #charRandInit, #charRandInitButton{
+#charNameInput, #charNpcSelect, #charAddNpcText, #charAddNpcInitMaster, #charAddNpcInit, #charAddButton, #charRandInit, #charRandInitButton, #sceneNameInput, #sceneAddButton, #sceneSelect, #sceneLoad, #sceneDelButton{
 	float: left;
 	margin: 5px;
 }
 
-#charAddNpcInitMaster, #charAddNpcInit, #charRandInit{
+#charAddNpcInitMaster, #charAddNpcInit, #charRandInit, #sceneDiv, #sceneAddDiv, #sceneLoadDiv{
 	border: 0px;
 	padding: 0px;
 	margin: 0px;
@@ -216,7 +220,7 @@ hr {
 }
 
 #charAddNpcInit{
-	width: 146px;
+	width: 150px;
 }
 
 #charNpcInitBaseInput, #charNpcInitD6Input{
@@ -233,4 +237,15 @@ hr {
 	width: 100px;
 	height: 50px;
 	#margin-left: 30%;
+	margin-bottom: -37px;
+}
+
+/*----------SceneManageForm-----------*/
+
+#sceneSelect{
+	width: 235px;
+}
+
+#SceneDiv{
+	#height: 70px;
 }

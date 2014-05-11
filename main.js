@@ -11,6 +11,10 @@ function whenLoaded(){
 	window.charAddNpcInitBase = document.getElementById("charNpcInitBaseInput");
 	window.charAddNpcInitD6 = document.getElementById("charNpcInitD6Input");
 	window.charAddRand = document.getElementById("charRandInit");
+	window.sceneAddName = document.getElementById("sceneNameInput");
+	window.sceneAddSelect = document.getElementById("sceneSelect");
+	
+	sceneOptionsLoad();
 	//Fill contents after half a second
 	//setTimeout(function(){fillContent()}, 500)
 }
@@ -175,4 +179,79 @@ function deleteChar(index){
 function nextPhase(){
 	for(var i=0; i<chars.length; i++) if(chars[i].isHighlighted) chars[i].sub(10);
 	findMax();
+}
+
+//--------------Scene Management---------------
+function sceneAdd(){
+	if(window.sceneAddName.value == "" || window.sceneAddName.value == null) animateBorder(window.sceneAddName);
+	else{
+		var d = new Date();
+		d.setTime(d.getTime() + (365*24*60*60*1000));
+		var expires = "expires="+d.toGMTString();
+		console.log(sceneToString());
+		document.cookie = window.sceneAddName.value + "=" + sceneToString() + "; " + expires;
+		console.log(document.cookie);
+		var hasAlready = false;
+		for(var i=0; i<window.sceneAddSelect.length; i++) if(window.sceneAddSelect.options[i].text == window.sceneAddName.value) hasAlready = true;
+		if(!hasAlready){
+			var newScene = document.createElement("option");
+			newScene.text = window.sceneAddName.value;
+			window.sceneAddSelect.options.add(newScene);
+			window.sceneAddSelect.value = window.sceneAddName.value;
+		}
+		window.sceneAddName.value = "";
+	}
+}
+
+function sceneLoad(){
+	
+	for(var i=0; i<chars.length;) deleteChar(0);
+	var m = document.cookie;
+	sceneName = window.sceneAddSelect.value + "=";
+	cookiesArr = document.cookie.split(";");
+	for(var i=0; i<cookiesArr.length; i++){
+		var cookie = cookiesArr[i].trim();
+		if(cookie.indexOf(sceneName) == 0) scenePopulate(cookie.substring(sceneName.length, cookie.length));
+	}
+}
+
+function sceneDelete(){
+	document.cookie = window.sceneAddSelect.value + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+	window.sceneAddSelect.remove(window.sceneAddSelect.selectedIndex);
+}
+
+function sceneToString(){
+	//charName:charNpc1:*if Npc*charBaseInit1:charD61:
+	var out = "";
+	for(var i=0; i<chars.length; i++){
+		out += ":" + chars[i].name.innerHTML;
+		out += ":" + chars[i].npc;
+		if(chars[i].npc){
+			out += ":" + chars[i].baseInit;
+			out += ":" + chars[i].D6Init;
+		}
+	}
+	return out.substring(1, out.length); //removes the first :
+}
+
+function scenePopulate(s){
+	var scene = s.split(":");
+	console.log(scene);
+	for(var i=0; i<scene.length; i++){
+		if(scene[i+1] == 'true') addChar(scene[i++], scene[i++], parseInt(scene[i++]), parseInt(scene[i]));
+		else  addChar(scene[i++], false);
+	}
+}
+
+function sceneOptionsLoad(){
+	var m = document.cookie;
+	console.log(m);
+	cookiesArr = document.cookie.split(";");
+	if(m != ""){
+		for(var i=0; i<cookiesArr.length; i++){
+			var newScene = document.createElement("option");
+			newScene.text = cookiesArr[i].substring(0, cookiesArr[i].indexOf("="));
+			window.sceneAddSelect.options.add(newScene);
+		}
+	}
 }

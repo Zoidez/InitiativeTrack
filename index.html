@@ -35,7 +35,7 @@
 	<input id="charNameInput" placeholder="Character Name">
 	<select id="CharNPCSelect" onchange="animateNpcInit()">
 		<option value="player">Player</option>
-		<Option value="npc">NPC</option>
+		<option value="npc">NPC</option>
 	</select>
 	<div id="charAddNpcInitMaster"><div id="charAddNpcInit">
 		<input id="charNpcInitBaseInput"></input><div id="charAddNpcText">+</div>
@@ -49,6 +49,22 @@
 <!</form>
 </div><br />
 
-<button id="nextButton" onClick="nextPhase()">Next></button>
+<button id="nextButton" onClick="nextPhase()">Next></button><br />
+
+<hr id="formSeparator">
+
+<div id="sceneDiv">
+	<div id="sceneAddDiv">
+		<input id="sceneNameInput" placeholder="Scene Name">
+		<button id="sceneAddButton" onClick="sceneAdd()">Save</button>
+	</div>
+	<div id="sceneLoadDiv">
+		<select id="sceneSelect">
+			<!--<option value="Default">Scenes</option>-->
+		</select>
+		<button id="sceneLoad" onClick="sceneLoad()">Load</button>
+		<button id="sceneDelButton" onClick="sceneDelete()">Delete</button>
+	</div>
+</div>
 </BODY>
 <HTML>
