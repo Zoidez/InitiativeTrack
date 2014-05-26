@@ -33,65 +33,6 @@ function fillContent(){
 	chars[4].initiative.value = "31";
 }
 
-function animateNpcInit(){
-	var end;
-	var width;
-	if(window.charAddNpc.selectedIndex/*charAddNpc.selectedIndex*/ == 1){
-		width = 0;
-		end = 146;
-		console.log(window.charAddNpcInitContainer);
-		var interval = window.setInterval(function(){
-			window.charAddNpcInitContainer.style.width = (width + "px");
-			width+=5;
-			if(width >= end){
-				window.clearInterval(interval);
-				window.charAddNpcInitContainer.style.width= "146px";
-			}
-		}, 1);
-	}
-	else{
-		width = 146;
-		end = 0;
-		var interval = window.setInterval(function(){
-			window.charAddNpcInitContainer.style.width = (width + "px");
-			width-=5;
-			if(width <= end){
-				window.clearInterval(interval);
-				window.charAddNpcInitContainer.style.width= "0px";
-			}
-		}, 1);
-	}
-}
-
-function animateRandInit(unroll){
-	var end;
-	var width;
-	if(unroll && (window.charAddRand.style.width == 0 || window.charAddRand.style.width == "0px")){
-		width = 0;
-		end = 78;
-		var interval = window.setInterval(function(){
-			window.charAddRand.style.width = (width + "px");
-			width+=3;
-			if(width >= end){
-				window.clearInterval(interval);
-				window.charAddRand.style.width= "78px";
-			}
-		}, 1);
-	}
-	if(!(unroll) && parseInt(window.charAddRand.style.width) > 0){
-		width = 78;
-		end = 0;
-		var interval = window.setInterval(function(){
-			window.charAddRand.style.width = (width + "px");
-			width-=3;
-			if(width <= end){
-				window.clearInterval(interval);
-				window.charAddRand.style.width= "0px";
-			}
-		}, 1);
-	}
-}
-
 function checkForm() {
 	var npc = document.getElementById("CharNPCSelect");
 	var npcSelected = (window.charAddNpc.selectedIndex == 1);
@@ -121,7 +62,27 @@ function checkForm() {
 function addChar(charName, npcSelected, baseInit, D6Init){
 	var newChar = new character(charName, npcSelected, baseInit, D6Init, chars.length);
 	chars.push(newChar);
-	if(npcSelected) animateRandInit(true);
+	if(npcSelected) animate(window.charAddRand, false, 0, 78, 3);
+}
+
+function animate(obj, isHeight, start, end, increment){
+	var unroll;
+	if(start < end) unroll = true;
+	else unroll = false;
+	if((isHeight && (end == parseInt(obj.style.height))) || (!(isHeight) && (end == parseInt(obj.style.width)))) console.log("animate(): redundant action");
+	else{
+		var interval = window.setInterval(function(){
+			if(isHeight) obj.style.height = (start + "px");
+			else obj.style.width = (start + "px");
+			if(unroll) start += increment;
+			else start -= increment;
+			if(((start >= end) && unroll) || ((start <= end) && !(unroll))){
+				window.clearInterval(interval);
+				if(isHeight) obj.style.height = (end + "px");
+				else obj.style.width = (end + "px");
+			}
+		}, 1);
+	}
 }
 
 function animateBorder(element){
@@ -142,12 +103,12 @@ function animateBorder(element){
 
 function randNpc(){
 	for(var i=0; i<chars.length; i++) if(chars[i].npc && (chars[i].initiative.value == "" || chars[i].initiative.value == null)) chars[i].randNpcInit();
-	animateRandInit(false);
+	animate(window.charAddRand, false, 78, 0, 3);
 }
 
 function clearRound(){
 	for(var i=0; i<chars.length; i++) chars[i].initiative.value = "";
-	animateRandInit(true);
+	animate(window.charAddRand, false, 0, 78, 3);
 }
 
 function findMax(){
@@ -171,9 +132,15 @@ function findMax(){
 }
 
 function deleteChar(index){
-	chars[index].del();
-	chars.splice(index, 1);
-	for(var i=0; i<chars.length; i++) chars[i].parentDiv.id = i;
+	animate(chars[index].parentDiv, true, 35, 0, 2);
+	var interval = window.setInterval(function(){
+		if(parseInt(chars[index].parentDiv.style.height) <= 4){
+			window.clearInterval(interval);
+			chars[index].del();
+			chars.splice(index, 1);
+			for(var i=0; i<chars.length; i++) chars[i].parentDiv.id = i;
+		}
+	}, 5);
 }
 
 function nextPhase(){

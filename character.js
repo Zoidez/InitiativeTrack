@@ -7,7 +7,6 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, counter){
 	this.D6Init = parseInt(D6Init);
 
 	//-----------Initializing the methods-----------
-	this.animateCharVertical = animateCharVertical;
 	this.animateFloat = animateFloat;
 	this.sub = sub;
 	this.highlight = highlight;
@@ -76,40 +75,9 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, counter){
 	this.sub10Container.appendChild(this.sub10);
 	this.parentDiv.appendChild(this.sub10Container);
 	insertChar.appendChild(this.parentDiv);
-
-	this.animateCharVertical(true);
+	animate(this.parentDiv, true, 0, 35, 2);
 
 	//END of Constructor. METHODS from here.
-	function animateCharVertical(unroll){
-		var element = this;
-		var end;
-		var height;
-		if(unroll){
-			height = 0;
-			end = 35;
-			var interval = window.setInterval(function(){
-				element.parentDiv.style.height = (height + "px");
-				height+=2;
-				if(height >= end){
-					window.clearInterval(interval);
-					element.parentDiv.style.height = "35px";
-				}
-			}, 1);
-		}
-		else{
-			height = 35;
-			end = 0;
-			var interval = window.setInterval(function(){
-				element.parentDiv.style.height = (height + "px");
-				height-=2;
-				if(height <= end){
-					window.clearInterval(interval);
-					element.parentDiv.style.height = "0px";
-					element.parentDiv.style.padding = "0px";
-				}
-			}, 1);
-		}
-	}
 	function randNpcInit(){
 		var init = 0;
 		for(var i=0; i<this.D6Init; i++){
