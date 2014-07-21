@@ -1,5 +1,6 @@
 
 var chars = [];
+var charNames = "";
 
 document.addEventListener("DOMContentLoaded", function(event){whenLoaded();});
 
@@ -16,7 +17,7 @@ function whenLoaded(){
 	
 	sceneOptionsLoad();
 	//Fill contents after half a second
-	//setTimeout(function(){fillContent()}, 500)
+	setTimeout(function(){fillContent()}, 500)
 }
 
 function fillContent(){
@@ -52,16 +53,37 @@ function checkForm() {
 		}
 	}
 	if(isInputGood){
-		addChar(window.charAddName.value, npcSelected, window.charAddNpcInitBase.value, window.charAddNpcInitD6.value);
+		addChar(window.charAddName.value.trim(), npcSelected, window.charAddNpcInitBase.value, window.charAddNpcInitD6.value);
 		charName.value = "";
 		window.charAddNpcInitBase.value = "";
 		window.charAddNpcInitD6.value = "";
 	}
 }
 
+function isInputUnique(){
+	var isUnique = true;
+	var match = "";
+	for(var i=0; i<chars.length; i++){
+		//match = chars[1].name.innerHTML.match(window.charAddName.value);
+		if(chars[i].name.innerHTML == window.charAddName.value.trim()) isUnique = false;
+		//if(chars[i].name.innerHTML.localeCompare(window.charAddName.value)==0) isUnique = false;
+	}
+	return isUnique;
+}
+
+function isInputUnique2(){
+	var isUnique = true;
+	var match = "";
+	match = charNames.match(window.charAddName.value.trim());
+	isUnique = ((match == "")||(match == null));
+	//if(chars[i].name.innerHTML.localeCompare(window.charAddName.value)==0) isUnique = false;
+	return isUnique;
+}
+
 function addChar(charName, npcSelected, baseInit, D6Init){
 	var newChar = new character(charName, npcSelected, baseInit, D6Init, chars.length);
 	chars.push(newChar);
+	charNames = charNames.concat(charName);
 	if(npcSelected) animate(window.charAddRand, false, 0, 78, 3);
 }
 
@@ -221,4 +243,11 @@ function sceneOptionsLoad(){
 			window.sceneAddSelect.options.add(newScene);
 		}
 	}
+}
+
+function testRegExp(){
+	var time = new Date();
+	for(var i=0; i<10000; i++) isInputUnique();
+	time -= new Date();
+	console.log(time);
 }
