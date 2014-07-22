@@ -1,6 +1,5 @@
 
 var chars = [];
-var charNames = "";
 
 document.addEventListener("DOMContentLoaded", function(event){whenLoaded();});
 
@@ -42,6 +41,10 @@ function checkForm() {
 		animateBorder(window.charAddName);
 		isInputGood = false;
 	}
+	if(!isInputUnique()){
+		animateBorder(window.charAddName);
+		isInputGood = false;
+	}
 	if(window.charAddNpc.selectedIndex == 1){
 		if(window.charAddNpcInitBase.value == "" || window.charAddNpcInitBase.value == null){
 			animateBorder(window.charAddNpcInitBase);
@@ -64,26 +67,14 @@ function isInputUnique(){
 	var isUnique = true;
 	var match = "";
 	for(var i=0; i<chars.length; i++){
-		//match = chars[1].name.innerHTML.match(window.charAddName.value);
 		if(chars[i].name.innerHTML == window.charAddName.value.trim()) isUnique = false;
-		//if(chars[i].name.innerHTML.localeCompare(window.charAddName.value)==0) isUnique = false;
 	}
-	return isUnique;
-}
-
-function isInputUnique2(){
-	var isUnique = true;
-	var match = "";
-	match = charNames.match(window.charAddName.value.trim());
-	isUnique = ((match == "")||(match == null));
-	//if(chars[i].name.innerHTML.localeCompare(window.charAddName.value)==0) isUnique = false;
 	return isUnique;
 }
 
 function addChar(charName, npcSelected, baseInit, D6Init){
 	var newChar = new character(charName, npcSelected, baseInit, D6Init, chars.length);
 	chars.push(newChar);
-	charNames = charNames.concat(charName);
 	if(npcSelected) animate(window.charAddRand, false, 0, 78, 3);
 }
 
