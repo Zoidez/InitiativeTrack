@@ -38,20 +38,20 @@ function checkForm() {
 	var npcSelected = (window.charAddNpc.selectedIndex == 1);
 	var isInputGood = true;
 	if(window.charAddName.value == "" || window.charAddName.value == null){
-		animateBorder(window.charAddName);
+		animateBorder(window.charAddName, 'borderColor');
 		isInputGood = false;
 	}
 	if(!isInputUnique()){
-		animateBorder(window.charAddName);
+		animateBorder(window.charAddName, 'borderColor');
 		isInputGood = false;
 	}
 	if(window.charAddNpc.selectedIndex == 1){
 		if(window.charAddNpcInitBase.value == "" || window.charAddNpcInitBase.value == null){
-			animateBorder(window.charAddNpcInitBase);
+			animateBorder(window.charAddNpcInitBase, 'borderColor');
 			isInputGood = false;
 		}
 		if(window.charAddNpcInitD6.value == "" || window.charAddNpcInitD6.value == null){
-			animateBorder(window.charAddNpcInitD6);
+			animateBorder(window.charAddNpcInitD6, 'borderColor');
 			isInputGood = false;
 		}
 	}
@@ -67,7 +67,10 @@ function isInputUnique(){
 	var isUnique = true;
 	var match = "";
 	for(var i=0; i<chars.length; i++){
-		if(chars[i].name.innerHTML == window.charAddName.value.trim()) isUnique = false;
+		if(chars[i].name.innerHTML == window.charAddName.value.trim()){
+			isUnique = false;
+			animateBorder(chars[i].name, "color");
+		}
 	}
 	return isUnique;
 }
@@ -75,53 +78,53 @@ function isInputUnique(){
 function addChar(charName, npcSelected, baseInit, D6Init){
 	var newChar = new character(charName, npcSelected, baseInit, D6Init, chars.length);
 	chars.push(newChar);
-	if(npcSelected) animate(window.charAddRand, false, 0, 78, 3);
+	if(npcSelected) animate(window.charAddRand, 'width', 0, 78, 3);
 }
 
-function animate(obj, isHeight, start, end, increment){
+function animate(obj, property, start, end, increment){
 	var unroll;
 	if(start < end) unroll = true;
 	else unroll = false;
-	if((isHeight && (end == parseInt(obj.style.height))) || (!(isHeight) && (end == parseInt(obj.style.width)))) console.log("animate(): redundant action");
+	if(end == parseInt(obj.style[property])) console.log("animate(): redundant action");
 	else{
 		var interval = window.setInterval(function(){
-			if(isHeight) obj.style.height = (start + "px");
-			else obj.style.width = (start + "px");
+			obj.style[property] = (start + "px");
 			if(unroll) start += increment;
 			else start -= increment;
 			if(((start >= end) && unroll) || ((start <= end) && !(unroll))){
 				window.clearInterval(interval);
-				if(isHeight) obj.style.height = (end + "px");
-				else obj.style.width = (end + "px");
+				obj.style[property] = (end + "px");
 			}
 		}, 1);
 	}
 }
 
-function animateBorder(element){
+function animateBorder(element, property){
 	var isRed = false;
+	var originalColour = element.style[property];
+	//console.log(element.css("border-color"));
 	var animate = setInterval(function(){
 		if(isRed === true){
-			element.style.borderColor = "#88A8B7";
+			element.style[property] = "#88A8B7";
 			isRed = false;
 		}
 		else{
-			element.style.borderColor = "#FF8888";
+			element.style[property] = "#FF8888";
 			isRed = true;
 		}
 	}, 100);
 	setTimeout(function(){clearInterval(animate)}, 900);
-	setTimeout(function(){element.style.borderColor = "#88A8B7"}, 1000);
+	setTimeout(function(){element.style.borderColor = ""}, 1000);
 }
 
 function randNpc(){
 	for(var i=0; i<chars.length; i++) if(chars[i].npc && (chars[i].initiative.value == "" || chars[i].initiative.value == null)) chars[i].randNpcInit();
-	animate(window.charAddRand, false, 78, 0, 3);
+	animate(window.charAddRand, 'width', 78, 0, 3);
 }
 
 function clearRound(){
 	for(var i=0; i<chars.length; i++) chars[i].initiative.value = "";
-	animate(window.charAddRand, false, 0, 78, 3);
+	animate(window.charAddRand, 'width', 0, 78, 3);
 }
 
 function findMax(){
@@ -145,7 +148,7 @@ function findMax(){
 }
 
 function deleteChar(index){
-	animate(chars[index].parentDiv, true, 35, 0, 2);
+	animate(chars[index].parentDiv, 'height', 35, 0, 2);
 	var interval = window.setInterval(function(){
 		if(parseInt(chars[index].parentDiv.style.height) <= 4){
 			window.clearInterval(interval);
@@ -163,7 +166,7 @@ function nextPhase(){
 
 //--------------Scene Management---------------
 function sceneAdd(){
-	if(window.sceneAddName.value == "" || window.sceneAddName.value == null) animateBorder(window.sceneAddName);
+	if(window.sceneAddName.value == "" || window.sceneAddName.value == null) animateBorder(window.sceneAddName, 'borderColor');
 	else{
 		var d = new Date();
 		d.setTime(d.getTime() + (365*24*60*60*1000));

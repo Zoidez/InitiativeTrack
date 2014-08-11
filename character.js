@@ -75,7 +75,7 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, counter){
 	this.sub10Container.appendChild(this.sub10);
 	this.parentDiv.appendChild(this.sub10Container);
 	insertChar.appendChild(this.parentDiv);
-	animate(this.parentDiv, true, 0, 35, 2);
+	animate(this.parentDiv, 'height', 0, 35, 2);
 
 	//END of Constructor. METHODS from here.
 	function randNpcInit(){
