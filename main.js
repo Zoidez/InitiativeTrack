@@ -37,36 +37,30 @@ function checkForm() {
 	var npc = document.getElementById("CharNPCSelect");
 	var npcSelected = (window.charAddNpc.selectedIndex == 1);
 	var isInputGood = true;
-	/*if(window.charAddName.value == "" || window.charAddName.value == null || (!/^\w+$/.test(window.charAddName.value))){
+	if(window.charAddName.value == "" || window.charAddName.value == null){
 		animateBorder(window.charAddName, 'borderColor');
 		isInputGood = false;
-	}*/
-	isInputGood = (checkInputText(window.charAddName, true) && !isInputUnique() ((npcSelected) ? (checkInputText(window.charAddNpcInitBase, false) && checkInputText(window.charAddNpcInitD6)) : true));
-	console.log("isInputGood: " + isInputGood);
-	/*if(npcSelected){
-		if(window.charAddNpcInitBase.value == "" || window.charAddNpcInitBase.value == null || (!/^\d+$/.test(window.charAddNpcInitBase.value))){
+	}
+	if(!isInputUnique()){
+		animateBorder(window.charAddName, 'borderColor');
+		isInputGood = false;
+	}
+	if(window.charAddNpc.selectedIndex == 1){
+		if(window.charAddNpcInitBase.value == "" || window.charAddNpcInitBase.value == null){
 			animateBorder(window.charAddNpcInitBase, 'borderColor');
 			isInputGood = false;
 		}
-		if(window.charAddNpcInitD6.value == "" || window.charAddNpcInitD6.value == null || (!/^\d+$/.test(window.charAddNpcInitD6.value))){
+		if(window.charAddNpcInitD6.value == "" || window.charAddNpcInitD6.value == null){
 			animateBorder(window.charAddNpcInitD6, 'borderColor');
 			isInputGood = false;
 		}
-	}*/
+	}
 	if(isInputGood){
 		addChar(window.charAddName.value.trim(), npcSelected, window.charAddNpcInitBase.value, window.charAddNpcInitD6.value);
 		charName.value = "";
 		window.charAddNpcInitBase.value = "";
 		window.charAddNpcInitD6.value = "";
 	}
-}
-function checkInputText(object, mustBeText){
-	var regexp = (mustBeText) ? /^\w+$/ : /^\d+$/
-	if(object == "" || object == null || (!regexp.test(object))){
-		animateBorder(object, "borderColor");
-		return false;
-	}
-	return true;
 }
 
 function isInputUnique(){
@@ -76,7 +70,6 @@ function isInputUnique(){
 		if(chars[i].name.innerHTML == window.charAddName.value.trim()){
 			isUnique = false;
 			animateBorder(chars[i].name, "color");
-			animateBorder(window.charAddName, 'borderColor');
 		}
 	}
 	return isUnique;
