@@ -33,7 +33,7 @@
 <div id="charAdd">
 <!<form id="charAddForm">
 	<input id="charNameInput" placeholder="Character Name">
-	<select id="CharNPCSelect" onchange="animate(window.charAddNpcInitContainer, false, (146*(Math.abs(window.charAddNpc.selectedIndex - 1))), (146*(window.charAddNpc.selectedIndex)), 5)">
+	<select id="CharNPCSelect" onchange="animate(window.charAddNpcInitContainer, 'width', (146*(Math.abs(window.charAddNpc.selectedIndex - 1))), (146*(window.charAddNpc.selectedIndex)), 5)">
 		<option value="player">Player</option>
 		<option value="npc">NPC</option>
 	</select>

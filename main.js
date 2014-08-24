@@ -37,20 +37,16 @@ function checkForm() {
 	var npc = document.getElementById("CharNPCSelect");
 	var npcSelected = (window.charAddNpc.selectedIndex == 1);
 	var isInputGood = true;
-	if(window.charAddName.value == "" || window.charAddName.value == null){
+	if(!checkInputText(window.charAddName.value, true) && !isInputUnique()){
 		animateBorder(window.charAddName, 'borderColor');
 		isInputGood = false;
 	}
-	if(!isInputUnique()){
-		animateBorder(window.charAddName, 'borderColor');
-		isInputGood = false;
-	}
-	if(window.charAddNpc.selectedIndex == 1){
-		if(window.charAddNpcInitBase.value == "" || window.charAddNpcInitBase.value == null){
+	if(npcSelected){
+		if(!checkInputText(window.charAddNpcInitBase.value, false)){
 			animateBorder(window.charAddNpcInitBase, 'borderColor');
 			isInputGood = false;
 		}
-		if(window.charAddNpcInitD6.value == "" || window.charAddNpcInitD6.value == null){
+		if(!checkInputText(window.charAddNpcInitD6.value, false)){
 			animateBorder(window.charAddNpcInitD6, 'borderColor');
 			isInputGood = false;
 		}
@@ -62,6 +58,14 @@ function checkForm() {
 		window.charAddNpcInitD6.value = "";
 	}
 }
+function checkInputText(object, mustBeText){
+	var regexp = (mustBeText) ? /^\w+$/ : /^\d+$/
+	if(object == "" || object == null || (!regexp.test(object))){
+		//animateBorder(object, "borderColor");
+		return false;
+	}
+	return true;
+}
 
 function isInputUnique(){
 	var isUnique = true;
@@ -70,6 +74,7 @@ function isInputUnique(){
 		if(chars[i].name.innerHTML == window.charAddName.value.trim()){
 			isUnique = false;
 			animateBorder(chars[i].name, "color");
+			animateBorder(window.charAddName, 'borderColor');
 		}
 	}
 	return isUnique;
@@ -114,7 +119,7 @@ function animateBorder(element, property){
 		}
 	}, 100);
 	setTimeout(function(){clearInterval(animate)}, 900);
-	setTimeout(function(){element.style.borderColor = ""}, 1000);
+	setTimeout(function(){element.style[property] = ""}, 1000);
 }
 
 function randNpc(){
