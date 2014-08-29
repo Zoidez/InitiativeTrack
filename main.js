@@ -15,8 +15,8 @@ function whenLoaded(){
 	window.sceneAddSelect = document.getElementById("sceneSelect");
 	
 	sceneOptionsLoad();
-	//Fill contents after half a second
-	setTimeout(function(){fillContent()}, 500)
+	//Fill the sample content in half a second
+	//setTimeout(function(){fillContent()}, 500);
 }
 
 function fillContent(){
@@ -37,7 +37,7 @@ function checkForm() {
 	var npc = document.getElementById("CharNPCSelect");
 	var npcSelected = (window.charAddNpc.selectedIndex == 1);
 	var isInputGood = true;
-	if(!checkInputText(window.charAddName.value, true) && !isInputUnique()){
+	if(!checkInputText(window.charAddName.value, true) || !isInputUnique()){
 		animateBorder(window.charAddName, 'borderColor');
 		isInputGood = false;
 	}
@@ -152,21 +152,24 @@ function findMax(){
 	else for(var i=0; i<maxInit.length; i++) chars[maxInit[i]].highlight(true);
 }
 
-function deleteChar(index){
+function deleteChar(index, delay){
 	animate(chars[index].parentDiv, 'height', 35, 0, 2);
-	var interval = window.setInterval(function(){
-		if(parseInt(chars[index].parentDiv.style.height) <= 4){
-			window.clearInterval(interval);
-			chars[index].del();
-			chars.splice(index, 1);
-			for(var i=0; i<chars.length; i++) chars[i].parentDiv.id = i;
-		}
-	}, 5);
+	setTimeout(function(){chars[index].del();
+		chars.splice(index, 1);
+		for(var i=0; i<chars.length; i++) chars[i].parentDiv.id = i;
+	}, delay);
 }
 
 function nextPhase(){
-	for(var i=0; i<chars.length; i++) if(chars[i].isHighlighted) chars[i].sub(10);
-	findMax();
+	var isInputGood = true;
+	for(var i=0; i<chars.length; i++) if(!(/^\d*$/.test(chars[i].initiative.value))){
+		isInputGood = false;
+		animateBorder(chars[i].initiative, "borderColor");
+	}
+	if(isInputGood){
+		for(var i=0; i<chars.length; i++) if(chars[i].isHighlighted) chars[i].sub(10);
+		findMax();
+	}
 }
 
 //--------------Scene Management---------------
@@ -193,7 +196,7 @@ function sceneAdd(){
 
 function sceneLoad(){
 	
-	for(var i=0; i<chars.length;) deleteChar(0);
+	for(var i=chars.length; i>=1; i--) deleteChar(0, 0);
 	var m = document.cookie;
 	sceneName = window.sceneAddSelect.value + "=";
 	cookiesArr = document.cookie.split(";");

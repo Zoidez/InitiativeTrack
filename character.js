@@ -35,7 +35,7 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, counter){
 	this.delButtonContainer.setAttribute("id", "charDel");
 	this.delButton.setAttribute("class", "charDelButton");
 	this.delButton.setAttribute("id", "charDelButton");
-	this.delButton.setAttribute("onClick", "deleteChar(this.parentElement.parentElement.id)");
+	this.delButton.setAttribute("onClick", "deleteChar(this.parentElement.parentElement.id, 100)");
 	this.delMinus.setAttribute("id", "charDelMinus");
 	this.name.setAttribute("id", "charName");
 	this.initiativeContainer.setAttribute("id", "charInit");
@@ -91,7 +91,7 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, counter){
 		this.isHighlighted = highlight;
 		if(highlight) this.parentDiv.setAttribute("class", "charContainerSelected");
 		else{
-			if(element.npc) this.parentDiv.setAttribute("class", "charContainerNPC");
+			if(this.npc) this.parentDiv.setAttribute("class", "charContainerNPC");
 			else this.parentDiv.setAttribute("class", "charContainer");
 		}
 	}
