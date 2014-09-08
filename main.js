@@ -37,8 +37,7 @@ function checkForm() {
 	var npc = document.getElementById("CharNPCSelect");
 	var npcSelected = (window.charAddNpc.selectedIndex == 1);
 	var isInputGood = true;
-	if(!checkInputText(window.charAddName.value, true) || !isInputUnique()){
-		animateBorder(window.charAddName, 'borderColor');
+	if(!isInputUnique(chars, "nameString", window.charAddName.value.trim(), true, window.charAddName, "name")){
 		isInputGood = false;
 	}
 	if(npcSelected){
@@ -53,7 +52,7 @@ function checkForm() {
 	}
 	if(isInputGood){
 		addChar(window.charAddName.value.trim(), npcSelected, window.charAddNpcInitBase.value, window.charAddNpcInitD6.value);
-		charName.value = "";
+		window.charAddName.value = "";
 		window.charAddNpcInitBase.value = "";
 		window.charAddNpcInitD6.value = "";
 	}
@@ -67,7 +66,28 @@ function checkInputText(object, mustBeText){
 	return true;
 }
 
-function isInputUnique(){
+function isInputUnique(array, postfix, compare, mustBeText, animate1, animate2Postfix){
+	var isUnique = true;
+	var match = "";
+	var regexp = (mustBeText) ? /^\w+$/ : /^\d+$/
+	if(compare == "" || compare == null || (!regexp.test(compare))){
+		animateBorder(animate1, 'borderColor');
+		return false;
+	}
+	else{
+		console.log("else");
+		for(var i=0; i<array.length; i++){
+			if(array[i][postfix] == compare){
+				isUnique = false;
+				animateBorder(animate1, 'borderColor');
+				animateBorder(array[i][animate2Postfix], "color");
+			}
+		}
+	}
+	return isUnique;
+}
+
+/*function isInputUnique_old(){
 	var isUnique = true;
 	var match = "";
 	for(var i=0; i<chars.length; i++){
@@ -78,7 +98,7 @@ function isInputUnique(){
 		}
 	}
 	return isUnique;
-}
+}*/
 
 function addChar(charName, npcSelected, baseInit, D6Init){
 	var newChar = new character(charName, npcSelected, baseInit, D6Init, chars.length);
@@ -247,9 +267,9 @@ function sceneOptionsLoad(){
 	}
 }
 
-function testRegExp(){
+/*function testRegExp(){
 	var time = new Date();
 	for(var i=0; i<10000; i++) isInputUnique();
 	time -= new Date();
 	console.log(time);
-}
+}*/

@@ -5,6 +5,7 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, counter){
 	this.isHighlighted = false;
 	this.baseInit = parseInt(baseInit);
 	this.D6Init = parseInt(D6Init);
+	this.nameString = charNameAtt;
 
 	//-----------Initializing the methods-----------
 	this.animateFloat = animateFloat;

@@ -26,6 +26,12 @@ input, select, button {
 	outline: none;
 }
 
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	button{
+		font-weight: normal !important;
+	}
+}
+
 button{
 	cursor: hand;
 }
