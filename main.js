@@ -58,7 +58,7 @@ function checkForm() {
 	}
 }
 function checkInputText(object, mustBeText){
-	var regexp = (mustBeText) ? /^\w+$/ : /^\d+$/
+	var regexp = (mustBeText) ? /^\w(\w|\s)*$/ : /^\d+$/
 	if(object == "" || object == null || (!regexp.test(object))){
 		//animateBorder(object, "borderColor");
 		return false;
@@ -69,8 +69,7 @@ function checkInputText(object, mustBeText){
 function isInputUnique(array, postfix, compare, mustBeText, animate1, animate2Postfix){
 	var isUnique = true;
 	var match = "";
-	var regexp = (mustBeText) ? /^\w+$/ : /^\d+$/
-	if(compare == "" || compare == null || (!regexp.test(compare))){
+	if(!checkInputText(compare, mustBeText)){
 		animateBorder(animate1, 'borderColor');
 		return false;
 	}
