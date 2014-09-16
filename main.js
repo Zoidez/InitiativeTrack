@@ -185,9 +185,7 @@ function deleteChar(index, delay){
 	var delChar = chars[index];
 	animate(delChar.parentDiv, 'height', 35, 0, 2);
 	chars.splice(index, 1);
-	console.log("chars:"+chars);
 	setTimeout(function(){
-		console.log("char to be deleted:"+delChar);
 		delChar.del();
 		for(var i=0; i<chars.length; i++) chars[i].parentDiv.id = i;
 	}, delay);
