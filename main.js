@@ -16,7 +16,7 @@ function whenLoaded(){
 	
 	sceneOptionsLoad();
 	//Fill the sample content in half a second
-	//setTimeout(function(){fillContent()}, 500);
+	setTimeout(function(){fillContent()}, 500);
 }
 
 function fillContent(){
@@ -123,6 +123,11 @@ function animate(obj, property, start, end, increment){
 	}
 }
 
+function rollNPCInitContainer(){
+	if(window.charAddNpc.selectedIndex == 1) animate(window.charAddNpcInitContainer, 'width', 0, 146, 5);
+	else animate(window.charAddNpcInitContainer, 'width', 146, 0, 5);
+}
+
 function animateBorder(element, property){
 	var isRed = false;
 	var originalColour = element.style[property];
@@ -155,7 +160,7 @@ function findMax(){
 	var max=0;
 	var maxInit = [];
 	for(var i=chars.length-1; i>=0; i--) if(!(chars[i].initiative.value == "" || chars[i].initiative.value == null)) max = i;
-	for(var i=0;i<chars.length; i++){
+	for(var i=0; i<chars.length; i++){
 		if(parseInt(chars[i].initiative.value) >= parseInt(chars[max].initiative.value)){
 			if(parseInt(chars[i].initiative.value) > parseInt(chars[max].initiative.value)) maxInit = [];
 			max = i;
@@ -163,18 +168,27 @@ function findMax(){
 		}
 	}
 	
-	//--------------Clear Previous Characters' Highlight---------------
+	//--------------Clear Previous Characters' Highlights---------------
 	for(var i=0; i<chars.length; i++) if(chars[i].isHighlighted) chars[i].highlight(false);
 	
-	//--------------Set the New Characters' Highlight---------------
+	//--------------Set the New Characters' Highlights---------------
 	if(parseInt(chars[max].initiative.value) <= 0) clearRound();
 	else for(var i=0; i<maxInit.length; i++) chars[maxInit[i]].highlight(true);
 }
 
+function deleteAll(){
+	var length = chars.length;
+	for(var i=0; i<length; i++) deleteChar(0, 100);
+}
+
 function deleteChar(index, delay){
-	animate(chars[index].parentDiv, 'height', 35, 0, 2);
-	setTimeout(function(){chars[index].del();
-		chars.splice(index, 1);
+	var delChar = chars[index];
+	animate(delChar.parentDiv, 'height', 35, 0, 2);
+	chars.splice(index, 1);
+	console.log("chars:"+chars);
+	setTimeout(function(){
+		console.log("char to be deleted:"+delChar);
+		delChar.del();
 		for(var i=0; i<chars.length; i++) chars[i].parentDiv.id = i;
 	}, delay);
 }

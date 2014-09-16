@@ -139,7 +139,7 @@ hr {
 	height: 28px;
 }
 
-.charDelButton:hover, #sceneDelButton:hover{
+.charDelButton:hover, #sceneDelButton:hover, #delAllButton:hover{
 	color: #FF6666;
 	border: 2px solid #FF6666;
 	box-shadow: 0 0 7px #FF6666;

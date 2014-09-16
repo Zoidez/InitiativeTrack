@@ -20,7 +20,10 @@
 	<div id="charContainerHeader">
 		<div id="charName">Name</div>
 		<div id="charInit">Initiative Score</div>
+		<!--div id="options">Options:</div-->
 	</div>
+	<hr>
+	<div id="toolsMasterContainer"><button id="delAllButton" onClick="deleteAll()">Delete All</div>
 	<hr>
 	<!--<div class="charContainer" id="charContainer">
 		<div id="charDel"><button class="charDelButton"><div id="charDelMinus">-</div></button></div>
@@ -37,7 +40,7 @@
 <div id="charAdd">
 <!<form id="charAddForm">
 	<input id="charNameInput" placeholder="Character Name">
-	<select id="CharNPCSelect" onchange="animate(window.charAddNpcInitContainer, 'width', (146*(Math.abs(window.charAddNpc.selectedIndex - 1))), (146*(window.charAddNpc.selectedIndex)), 5)">
+	<select id="CharNPCSelect" onchange="rollNPCInitContainer()">
 		<option value="player">Player</option>
 		<option value="npc">NPC</option>
 	</select>
@@ -49,8 +52,7 @@
 	<div id="charRandInit">
 		<button id="charRandInitButton" onClick="randNpc()">Rand</button>
 	</div>
-	<!--button id="charAddButton" onClick="testRegExp()">Test</button>
-	 <!--onClick="animate(window.charAddRand, false, 0, 78, 3)"-->
+	<!--button id="charAddButton" onClick="testRegExp()">Test</button-->
 <!</form>
 </div><br />
 
