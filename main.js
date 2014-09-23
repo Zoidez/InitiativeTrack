@@ -4,6 +4,10 @@ var chars = [];
 document.addEventListener("DOMContentLoaded", function(event){whenLoaded();});
 
 function whenLoaded(){
+	//catching the tools and options
+	window.toolsStandardRulesRadio = document.getElementById("standardRulesRadio");
+	window.toolsAlternativeRulesRadio = document.getElementById("alternativeRulesRadio");
+
 	//catching the charAdd form elements
 	window.charAddName = document.getElementById("charNameInput");
 	window.charAddNpc = document.getElementById("CharNPCSelect");
@@ -11,9 +15,12 @@ function whenLoaded(){
 	window.charAddNpcInitBase = document.getElementById("charNpcInitBaseInput");
 	window.charAddNpcInitD6 = document.getElementById("charNpcInitD6Input");
 	window.charAddRand = document.getElementById("charRandInit");
+	
+	//catching the scene and cookies processing functions
 	window.sceneAddName = document.getElementById("sceneNameInput");
 	window.sceneAddSelect = document.getElementById("sceneSelect");
 	
+	toolsLoad();
 	sceneOptionsLoad();
 	//Fill the sample content in half a second
 	setTimeout(function(){fillContent()}, 500);
@@ -41,11 +48,11 @@ function checkForm() {
 		isInputGood = false;
 	}
 	if(npcSelected){
-		if(!checkInputText(window.charAddNpcInitBase.value, false)){
+		if(!checkInputText(window.charAddNpcInitBase.value, false, false)){
 			animateBorder(window.charAddNpcInitBase, 'borderColor');
 			isInputGood = false;
 		}
-		if(!checkInputText(window.charAddNpcInitD6.value, false)){
+		if(!checkInputText(window.charAddNpcInitD6.value, false, false)){
 			animateBorder(window.charAddNpcInitD6, 'borderColor');
 			isInputGood = false;
 		}
@@ -57,9 +64,14 @@ function checkForm() {
 		window.charAddNpcInitD6.value = "";
 	}
 }
-function checkInputText(object, mustBeText){
+
+function checkInputText(object, mustBeText, voidAllowed){
 	var regexp = (mustBeText) ? /^\w(\w|\s)*$/ : /^\d+$/
-	if(object == "" || object == null || (!regexp.test(object))){
+	if(!voidAllowed && (object == "" || object == null)){ console.log("void is not allowed and is now.");
+	return false;
+	}
+	if(!(regexp.test(object) || (object == ""))){
+		//Apparently , the function launches before the init field value is altered. Isn't that crazy?
 		//animateBorder(object, "borderColor");
 		return false;
 	}
@@ -69,7 +81,7 @@ function checkInputText(object, mustBeText){
 function isInputUnique(array, postfix, compare, mustBeText, animate1, animate2Postfix){
 	var isUnique = true;
 	var match = "";
-	if(!checkInputText(compare, mustBeText)){
+	if(!checkInputText(compare, mustBeText, false)){
 		animateBorder(animate1, 'borderColor');
 		return false;
 	}
@@ -86,18 +98,15 @@ function isInputUnique(array, postfix, compare, mustBeText, animate1, animate2Po
 	return isUnique;
 }
 
-/*function isInputUnique_old(){
-	var isUnique = true;
-	var match = "";
-	for(var i=0; i<chars.length; i++){
-		if(chars[i].name.innerHTML == window.charAddName.value.trim()){
-			isUnique = false;
-			animateBorder(chars[i].name, "color");
-			animateBorder(window.charAddName, 'borderColor');
+function checkInitInput(index){
+	setTimeout(function(){
+		if(!checkInputText(chars[index].initiative.value, false, true)){
+			animateBorder(chars[index].initiative, "borderColor");
+			return false;
 		}
-	}
-	return isUnique;
-}*/
+	}, 1);
+	return true;
+}
 
 function addChar(charName, npcSelected, baseInit, D6Init){
 	var newChar = new character(charName, npcSelected, baseInit, D6Init, chars.length);
@@ -131,7 +140,6 @@ function rollNPCInitContainer(){
 function animateBorder(element, property){
 	var isRed = false;
 	var originalColour = element.style[property];
-	//console.log(element.css("border-color"));
 	var animate = setInterval(function(){
 		if(isRed === true){
 			element.style[property] = "#88A8B7";
@@ -146,6 +154,11 @@ function animateBorder(element, property){
 	setTimeout(function(){element.style[property] = ""}, 1000);
 }
 
+function pulseBorder(element, property){ //Here! This calculation provides with a way to set the red channel ranging from the normal color to ff and back in a pulsing fashion
+	var tests = parseInt(window.charAddName.value);
+	alert(tests.toString(16));
+}
+
 function randNpc(){
 	for(var i=0; i<chars.length; i++) if(chars[i].npc && (chars[i].initiative.value == "" || chars[i].initiative.value == null)) chars[i].randNpcInit();
 	animate(window.charAddRand, 'width', 78, 0, 3);
@@ -157,20 +170,27 @@ function clearRound(){
 }
 
 function findMax(){
-	var max=0;
-	var maxInit = [];
-	for(var i=chars.length-1; i>=0; i--) if(!(chars[i].initiative.value == "" || chars[i].initiative.value == null)) max = i;
-	for(var i=0; i<chars.length; i++){
-		if(parseInt(chars[i].initiative.value) >= parseInt(chars[max].initiative.value)){
-			if(parseInt(chars[i].initiative.value) > parseInt(chars[max].initiative.value)) maxInit = [];
-			max = i;
-			maxInit.push(i);
+	var max=0,
+		maxInit = [],
+		initInputCorrect = true;
+	for(var i=chars.length-1; i>=0; i--){
+		if(!(chars[i].initiative.value == "" || chars[i].initiative.value == null)) max = i;
+		if(!checkInitInput(i)){
+			initInputCorrect = false;
+			animateBorder(chars[i].initiative, "borderColor");
 		}
 	}
-	
+	if(initInputCorrect){
+		for(var i=0; i<chars.length; i++){
+			if(parseInt(chars[i].initiative.value) >= parseInt(chars[max].initiative.value)){
+				if(parseInt(chars[i].initiative.value) > parseInt(chars[max].initiative.value)) maxInit = [];
+				max = i;
+				maxInit.push(i);
+			}
+		}
+	}
 	//--------------Clear Previous Characters' Highlights---------------
 	for(var i=0; i<chars.length; i++) if(chars[i].isHighlighted) chars[i].highlight(false);
-	
 	//--------------Set the New Characters' Highlights---------------
 	if(parseInt(chars[max].initiative.value) <= 0) clearRound();
 	else for(var i=0; i<maxInit.length; i++) chars[maxInit[i]].highlight(true);
@@ -204,6 +224,41 @@ function nextPhase(){
 }
 
 //--------------Scene Management---------------
+function toolsSave(){
+	cookieSet("SIT_tools", toolsToString());
+}
+
+function toolsLoad(){
+	var save = cookieGet("SIT_tools");
+	if(save != null){
+		save.split(":");
+		window.toolsStandardRulesRadio.checked = (save[0] == "true");
+		window.toolsAlternativeRulesRadio.checked = !(save[0] == "true");
+	}
+}
+
+function toolsToString(){
+	//standardRule(boolean):
+	return window.toolsStandardRulesRadio.checked.toString();
+}
+
+function cookieSet(name, value){
+	var d = new Date();
+	d.setTime(d.getTime() + (365*24*60*60*1000));
+	var expires = "expires=" + d.toGMTString();
+	document.cookie = name + "=" + value + "; " + expires;
+}
+
+function cookieGet(name){
+	if (typeof document.cookie == "undefined") return null;
+	var cookies = document.cookie.split(";"),
+		cookie = "";
+	for(var i=0; i<cookies.length; i++){
+		cookie = cookies[i].trim();
+		if(cookie.indexOf(name) == 0) return cookie.substring((name.length+1), cookie.length);
+	}
+}
+
 function sceneAdd(){
 	if(window.sceneAddName.value == "" || window.sceneAddName.value == null) animateBorder(window.sceneAddName, 'borderColor');
 	else{
@@ -228,7 +283,7 @@ function sceneAdd(){
 function sceneLoad(){
 	
 	for(var i=chars.length; i>=1; i--) deleteChar(0, 0);
-	var m = document.cookie;
+	//var m = document.cookie;
 	sceneName = window.sceneAddSelect.value + "=";
 	cookiesArr = document.cookie.split(";");
 	for(var i=0; i<cookiesArr.length; i++){
@@ -243,7 +298,7 @@ function sceneDelete(){
 }
 
 function sceneToString(){
-	//charName:charNpc1:*if Npc*charBaseInit1:charD61:
+	//charName:charNpc1:*if Npc*charBaseInit1:charD61
 	var out = "";
 	for(var i=0; i<chars.length; i++){
 		out += ":" + chars[i].name.innerHTML;

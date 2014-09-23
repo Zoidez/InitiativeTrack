@@ -17,13 +17,18 @@
 
 
 <div id="charMasterContainer">
+	<div id="toolsMasterContainer">
+		<button id="delAllButton" onClick="deleteAll()">Delete All</button>
+		<div id="options">Rules:
+			<input type="radio" id="standardRulesRadio" onChange="toolsSave()" name="rule" checked="true">Standard</radio>
+			<input type="radio" id="alternativeRulesRadio" onChange="toolsSave()" name="rule">Alternative</radio>
+		</div>
+	</div>
+	<hr>
 	<div id="charContainerHeader">
 		<div id="charName">Name</div>
 		<div id="charInit">Initiative Score</div>
-		<!--div id="options">Options:</div-->
 	</div>
-	<hr>
-	<div id="toolsMasterContainer"><button id="delAllButton" onClick="deleteAll()">Delete All</div>
 	<hr>
 	<!--<div class="charContainer" id="charContainer">
 		<div id="charDel"><button class="charDelButton"><div id="charDelMinus">-</div></button></div>
@@ -52,7 +57,7 @@
 	<div id="charRandInit">
 		<button id="charRandInitButton" onClick="randNpc()">Rand</button>
 	</div>
-	<!--button id="charAddButton" onClick="testRegExp()">Test</button-->
+	<button id="charAddButton" onClick="pulseBorder()">Test</button>
 <!</form>
 </div><br />
 

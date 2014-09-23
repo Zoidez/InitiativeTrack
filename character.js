@@ -42,6 +42,7 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, counter){
 	this.initiativeContainer.setAttribute("id", "charInit");
 	this.initiative.setAttribute("class", "charInitInput");
 	this.initiative.setAttribute("id", "charInitInput");
+	this.initiative.setAttribute("onKeyPress", "checkInitInput(" + counter + ")");
 	this.floatNumber.setAttribute("class", "charInitFloat");
 	this.floatNumber.setAttribute("id", "charInitFloat");
 	this.sub5Container.setAttribute("id", "subContainer");

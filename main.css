@@ -210,7 +210,7 @@ hr {
 	/* text-align: left;  */
 }
 
-#charNameInput, #charNpcSelect, #charAddNpcText, #charAddNpcInitMaster, #charAddNpcInit, #charAddButton, #charRandInit, #charRandInitButton, #sceneNameInput, #sceneAddButton, #sceneSelect, #sceneLoad, #sceneDelButton{
+#charNameInput, #charNpcSelect, #charAddNpcText, #charAddNpcInitMaster, #charAddNpcInit, #charAddButton, #charRandInit, #charRandInitButton, #sceneNameInput, #sceneAddButton, #sceneSelect, #sceneLoad, #sceneDelButton, #options, #delAllButton{
 	float: left;
 	margin: 5px;
 }
