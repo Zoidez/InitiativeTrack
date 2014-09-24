@@ -139,7 +139,6 @@ function rollNPCInitContainer(){
 
 function animateBorder(element, property){
 	var isRed = false;
-	var originalColour = element.style[property];
 	var animate = setInterval(function(){
 		if(isRed === true){
 			element.style[property] = "#88A8B7";
@@ -154,9 +153,18 @@ function animateBorder(element, property){
 	setTimeout(function(){element.style[property] = ""}, 1000);
 }
 
-function pulseBorder(element, property){ //Here! This calculation provides with a way to set the red channel ranging from the normal color to ff and back in a pulsing fashion
-	var tests = parseInt(window.charAddName.value);
-	alert(tests.toString(16));
+function pulseBorder(element, property, origColor){ //Here you go, pulseBorder() is ready! Now, I will start on the standard rule support. For that, I need combat turn count in HTML.
+	var maxColor = parseInt(("ff" + origColor.substring(2, origColor.length)), 16),
+		deencrement = 65536,
+		curColor = origColor = parseInt(origColor, 16),
+		mSPF = (32768000/(maxColor - curColor)); //That number is basically (#mSec * 65536) The number is "010000" in hex, the increment.
+		console.log(mSPF);
+	var pulse = setInterval(function(){
+		curColor = curColor + deencrement;
+		element.style[property] = curColor.toString(16);
+		if(curColor >= maxColor) deencrement = -65536;
+		if(curColor <= origColor) deencrement = 65536;
+	}, mSPF);
 }
 
 function randNpc(){
