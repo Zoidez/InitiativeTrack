@@ -210,12 +210,12 @@ hr {
 	/* text-align: left;  */
 }
 
-#charNameInput, #charNpcSelect, #charAddNpcText, #charAddNpcInitMaster, #charAddNpcInit, #charAddButton, #charRandInit, #charRandInitButton, #sceneNameInput, #sceneAddButton, #sceneSelect, #sceneLoad, #sceneDelButton, #options, #delAllButton{
+#charNameInput, #charNpcSelect, #charAddNpcText, #charAddNpcInitMaster, #charAddNpcInit, #charAddButton, #charRandInit, #charRandInitButton, #sceneNameInput, #sceneAddButton, #sceneSelect, #sceneLoad, #sceneDelButton, #options, #delAllButton, #sceneToTextInput, #sceneToTextGenerateButton, #sceneToTextLoadButton{
 	float: left;
 	margin: 5px;
 }
 
-#charAddNpcInitMaster, #charAddNpcInit, #charRandInit, #sceneDiv, #sceneAddDiv, #sceneLoadDiv{
+#charAddNpcInitMaster, #charAddNpcInit, #charRandInit, #sceneDiv, #sceneAddDiv, #sceneLoadDiv, #sceneToTextButtonsDiv, #sceneToTextInputDiv{
 	border: 0px;
 	padding: 0px;
 	margin: 0px;

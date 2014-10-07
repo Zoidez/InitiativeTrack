@@ -19,11 +19,15 @@ function whenLoaded(){
 	//catching the scene and cookies processing functions
 	window.sceneAddName = document.getElementById("sceneNameInput");
 	window.sceneAddSelect = document.getElementById("sceneSelect");
+	window.sceneToTextInput = document.getElementById("sceneToTextInput");
+	window.sceneToTextGenerateButton = document.getElementById("sceneToTextGenerateButton");
+	window.sceneToTextLoadButton = document.getElementById("sceneToTextLoadButton");
 	
 	toolsLoad();
 	sceneOptionsLoad();
+	whatsNew();
 	//Fill the sample content in half a second
-	setTimeout(function(){fillContent()}, 500);
+	//setTimeout(function(){fillContent()}, 500);
 }
 
 function fillContent(){
@@ -108,8 +112,8 @@ function checkInitInput(index){
 	return true;
 }
 
-function addChar(charName, npcSelected, baseInit, D6Init){
-	var newChar = new character(charName, npcSelected, baseInit, D6Init, chars.length);
+function addChar(charName, npcSelected, baseInit, D6Init, initInput){
+	var newChar = new character(charName, npcSelected, baseInit, D6Init, initInput, chars.length);
 	chars.push(newChar);
 	if(npcSelected) animate(window.charAddRand, 'width', 0, 78, 3);
 }
@@ -165,6 +169,7 @@ function pulseBorder(element, property, origColor){ //Here you go, pulseBorder()
 		if(curColor >= maxColor) deencrement = -65536;
 		if(curColor <= origColor) deencrement = 65536;
 	}, mSPF);
+	setTimeout(function(){clearInterval(pulse);}, 4000);
 }
 
 function randNpc(){
@@ -306,7 +311,7 @@ function sceneDelete(){
 }
 
 function sceneToString(){
-	//charName:charNpc1:*if Npc*charBaseInit1:charD61
+	//charName:charNpc:*if Npc*charBaseInit:charD6:charInitInput
 	var out = "";
 	for(var i=0; i<chars.length; i++){
 		out += ":" + chars[i].name.innerHTML;
@@ -315,16 +320,18 @@ function sceneToString(){
 			out += ":" + chars[i].baseInit;
 			out += ":" + chars[i].D6Init;
 		}
+		out += ":" + chars[i].initiative.value;
 	}
-	return out.substring(1, out.length); //removes the first :
+	return out.substring(1, out.length); //removes the first ":"
 }
 
 function scenePopulate(s){
 	var scene = s.split(":");
 	console.log(scene);
 	for(var i=0; i<scene.length; i++){
-		if(scene[i+1] == 'true') addChar(scene[i++], scene[i++], parseInt(scene[i++]), parseInt(scene[i]));
-		else  addChar(scene[i++], false);
+		console.log("extracting: " + scene[i+4]);
+		if(scene[i+1] == 'true') addChar(scene[i++], scene[i++], parseInt(scene[i++]), parseInt(scene[i++]), parseInt(scene[i]));
+		else  addChar(scene[i++], false, scene[i++], 0, parseInt(scene[i]));
 	}
 }
 
@@ -334,11 +341,29 @@ function sceneOptionsLoad(){
 	cookiesArr = document.cookie.split(";");
 	if(m != ""){
 		for(var i=0; i<cookiesArr.length; i++){
-			var newScene = document.createElement("option");
-			newScene.text = cookiesArr[i].substring(0, cookiesArr[i].indexOf("="));
-			window.sceneAddSelect.options.add(newScene);
+			if(cookiesArr[i].indexOf("tools") != 0){
+				var newScene = document.createElement("option");
+				newScene.text = cookiesArr[i].substring(0, cookiesArr[i].indexOf("="));
+				window.sceneAddSelect.options.add(newScene);
+			}
 		}
 	}
+}
+
+//--------------Scene Management---------------
+function sceneToTextGenetate(){
+	window.sceneToTextInput.value = sceneToString();
+}
+
+function sceneToTextLoad(){
+	for(var i=chars.length; i>=1; i--) deleteChar(0, 0);
+	scenePopulate(window.sceneToTextInput.value);
+}
+
+function whatsNew(){
+	pulseBorder(window.sceneToTextInput, "borderColor", "88A8B7");
+	pulseBorder(window.sceneToTextGenerateButton, "borderColor", "88A8B7");
+	pulseBorder(window.sceneToTextLoadButton, "borderColor", "88A8B7");
 }
 
 /*function testRegExp(){

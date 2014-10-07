@@ -17,14 +17,14 @@
 
 
 <div id="charMasterContainer">
-	<div id="toolsMasterContainer">
+	<!--div id="toolsMasterContainer">
 		<button id="delAllButton" onClick="deleteAll()">Delete All</button>
 		<div id="options">Rules:
 			<input type="radio" id="standardRulesRadio" onChange="toolsSave()" name="rule" checked="true">Standard</radio>
 			<input type="radio" id="alternativeRulesRadio" onChange="toolsSave()" name="rule">Alternative</radio>
 		</div>
 	</div>
-	<hr>
+	<hr-->
 	<div id="charContainerHeader">
 		<div id="charName">Name</div>
 		<div id="charInit">Initiative Score</div>
@@ -57,7 +57,7 @@
 	<div id="charRandInit">
 		<button id="charRandInitButton" onClick="randNpc()">Rand</button>
 	</div>
-	<button id="charAddButton" onClick="pulseBorder(window.charAddName, 'borderColor', '88A8B7')">Test</button>
+	<!-- button id="charAddButton" onClick="pulseBorder(window.charAddName, 'borderColor', '88A8B7')">Test</button -->
 <!</form>
 </div><br />
 
@@ -76,6 +76,16 @@
 		</select>
 		<button id="sceneLoad" onClick="sceneLoad()">Load</button>
 		<button id="sceneDelButton" onClick="sceneDelete()">Delete</button>
+	</div>
+</div>
+<hr id="formSeparator">
+<div id="sceneToTextDiv">
+	<div id="sceneToTextInputDiv">
+		<input id="sceneToTextInput" placeholder="Generate or Paste Code" onClick="this.setSelectionRange(0, this.value.length)">
+	</div>
+	<div id="sceneToTextButtonsDiv">
+		<button id="sceneToTextGenerateButton" onClick="sceneToTextGenetate()">Generate</button>
+		<button id="sceneToTextLoadButton" onClick="sceneToTextLoad()">Load</button>
 	</div>
 </div>
 

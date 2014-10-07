@@ -1,4 +1,4 @@
-function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, counter){
+function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, initInput, counter){
 
 	//-----------Creating the HTML-independent fields-----------
 	this.npc = npcSelectedAtt;
@@ -57,6 +57,7 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, counter){
 	//-----------Filling the elements-----------
 	this.delMinus.innerHTML = "-";
 	this.name.innerHTML = charNameAtt;
+	this.initiative.value = (typeof initInput != "undefined") ? parseInt(initInput) : ""; //Figure out "undefined" to be ""
 	this.floatNumber.innerHTML = "10";
 	this.sub5.innerHTML = "-5";
 	this.sub10.innerHTML = "-10";
