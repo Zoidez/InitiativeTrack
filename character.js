@@ -42,7 +42,7 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, initInput, cou
 	this.initiativeContainer.setAttribute("id", "charInit");
 	this.initiative.setAttribute("class", "charInitInput");
 	this.initiative.setAttribute("id", "charInitInput");
-	this.initiative.setAttribute("onKeyPress", "checkInitInput(" + counter + ")");
+	this.initiative.setAttribute("onKeyPress", "initInputChanged(" + counter + ")");
 	this.floatNumber.setAttribute("class", "charInitFloat");
 	this.floatNumber.setAttribute("id", "charInitFloat");
 	this.sub5Container.setAttribute("id", "subContainer");
@@ -57,7 +57,8 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, initInput, cou
 	//-----------Filling the elements-----------
 	this.delMinus.innerHTML = "-";
 	this.name.innerHTML = charNameAtt;
-	this.initiative.value = (typeof initInput != "undefined") ? parseInt(initInput) : ""; //Figure out "undefined" to be ""
+	this.initiative.value = (initInput == null || initInput == "") ? "" : initInput;
+	console.log("initInput: "+initInput);
 	this.floatNumber.innerHTML = "10";
 	this.sub5.innerHTML = "-5";
 	this.sub10.innerHTML = "-10";

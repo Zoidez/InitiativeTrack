@@ -27,7 +27,7 @@ function whenLoaded(){
 	sceneOptionsLoad();
 	whatsNew();
 	//Fill the sample content in half a second
-	//setTimeout(function(){fillContent()}, 500);
+	setTimeout(function(){fillContent()}, 500);
 }
 
 function fillContent(){
@@ -71,7 +71,7 @@ function checkForm() {
 
 function checkInputText(object, mustBeText, voidAllowed){
 	var regexp = (mustBeText) ? /^\w(\w|\s)*$/ : /^\d+$/
-	if(!voidAllowed && (object == "" || object == null)){ console.log("void is not allowed and is now.");
+	if(!voidAllowed && (object == "" || object == null)){ console.log("checkInputText: void is not allowed and is now.");
 	return false;
 	}
 	if(!(regexp.test(object) || (object == ""))){
@@ -90,7 +90,6 @@ function isInputUnique(array, postfix, compare, mustBeText, animate1, animate2Po
 		return false;
 	}
 	else{
-		console.log("else");
 		for(var i=0; i<array.length; i++){
 			if(array[i][postfix] == compare){
 				isUnique = false;
@@ -100,6 +99,11 @@ function isInputUnique(array, postfix, compare, mustBeText, animate1, animate2Po
 		}
 	}
 	return isUnique;
+}
+
+function initInputChanged(index){
+	currentSceneSave();
+	return checkInitInput(index);
 }
 
 function checkInitInput(index){
@@ -115,6 +119,7 @@ function checkInitInput(index){
 function addChar(charName, npcSelected, baseInit, D6Init, initInput){
 	var newChar = new character(charName, npcSelected, baseInit, D6Init, initInput, chars.length);
 	chars.push(newChar);
+	currentSceneSave();
 	if(npcSelected) animate(window.charAddRand, 'width', 0, 78, 3);
 }
 
@@ -162,7 +167,6 @@ function pulseBorder(element, property, origColor){ //Here you go, pulseBorder()
 		deencrement = 65536,
 		curColor = origColor = parseInt(origColor, 16),
 		mSPF = (32768000/(maxColor - curColor)); //That number is basically (#mSec * 65536) The number is "010000" in hex, the increment.
-		console.log(mSPF);
 	var pulse = setInterval(function(){
 		curColor = curColor + deencrement;
 		element.style[property] = curColor.toString(16);
@@ -174,6 +178,7 @@ function pulseBorder(element, property, origColor){ //Here you go, pulseBorder()
 
 function randNpc(){
 	for(var i=0; i<chars.length; i++) if(chars[i].npc && (chars[i].initiative.value == "" || chars[i].initiative.value == null)) chars[i].randNpcInit();
+	currentSceneSave();
 	animate(window.charAddRand, 'width', 78, 0, 3);
 }
 
@@ -218,6 +223,7 @@ function deleteChar(index, delay){
 	var delChar = chars[index];
 	animate(delChar.parentDiv, 'height', 35, 0, 2);
 	chars.splice(index, 1);
+	currentSceneSave(); //.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Something is not right here.
 	setTimeout(function(){
 		delChar.del();
 		for(var i=0; i<chars.length; i++) chars[i].parentDiv.id = i;
@@ -233,10 +239,13 @@ function nextPhase(){
 	if(isInputGood){
 		for(var i=0; i<chars.length; i++) if(chars[i].isHighlighted) chars[i].sub(10);
 		findMax();
+		currentSceneSave();
 	}
 }
 
 //--------------Scene Management---------------
+
+//--------------Tools---------------
 function toolsSave(){
 	cookieSet("SIT_tools", toolsToString());
 }
@@ -255,6 +264,14 @@ function toolsToString(){
 	return window.toolsStandardRulesRadio.checked.toString();
 }
 
+//--------------Current Scene---------------
+function currentSceneSave(){
+	var scene = sceneToString();
+	console.log(scene);
+	cookieSet("SIT_currentScene", scene);
+}
+
+//--------------Cookies---------------
 function cookieSet(name, value){
 	var d = new Date();
 	d.setTime(d.getTime() + (365*24*60*60*1000));
@@ -327,17 +344,15 @@ function sceneToString(){
 
 function scenePopulate(s){
 	var scene = s.split(":");
-	console.log(scene);
+	console.log("scenePopulate: " + scene);
 	for(var i=0; i<scene.length; i++){
-		console.log("extracting: " + scene[i+4]);
-		if(scene[i+1] == 'true') addChar(scene[i++], scene[i++], parseInt(scene[i++]), parseInt(scene[i++]), parseInt(scene[i]));
-		else  addChar(scene[i++], false, scene[i++], 0, parseInt(scene[i]));
+		if(scene[i+1] == 'true') addChar(scene[i++], scene[i++], parseInt(scene[i++]), parseInt(scene[i++]), scene[i]);
+		else  addChar(scene[i++], false, scene[i++], 0, scene[i]); //Technically, the third parameter passed is "false" but we need to move onto the next array element and putting scene[i++] instead of "false" brings complications. So instead, we are using the needless base initiative parameter place to increment the position.
 	}
 }
 
 function sceneOptionsLoad(){
 	var m = document.cookie;
-	console.log(m);
 	cookiesArr = document.cookie.split(";");
 	if(m != ""){
 		for(var i=0; i<cookiesArr.length; i++){
