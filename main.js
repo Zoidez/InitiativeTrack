@@ -24,10 +24,11 @@ function whenLoaded(){
 	window.sceneToTextLoadButton = document.getElementById("sceneToTextLoadButton");
 	
 	toolsLoad();
+	currentSceneLoad();
 	sceneOptionsLoad();
 	whatsNew();
 	//Fill the sample content in half a second
-	setTimeout(function(){fillContent()}, 500);
+	//setTimeout(function(){fillContent()}, 500);
 }
 
 function fillContent(){
@@ -102,17 +103,17 @@ function isInputUnique(array, postfix, compare, mustBeText, animate1, animate2Po
 }
 
 function initInputChanged(index){
-	currentSceneSave();
-	return checkInitInput(index);
+	setTimeout(function(){
+		currentSceneSave();
+		return checkInitInput(index);
+	}, 1);
 }
 
 function checkInitInput(index){
-	setTimeout(function(){
-		if(!checkInputText(chars[index].initiative.value, false, true)){
-			animateBorder(chars[index].initiative, "borderColor");
-			return false;
-		}
-	}, 1);
+	if(!checkInputText(chars[index].initiative.value, false, true)){
+		animateBorder(chars[index].initiative, "borderColor");
+		return false;
+	}
 	return true;
 }
 
@@ -223,7 +224,7 @@ function deleteChar(index, delay){
 	var delChar = chars[index];
 	animate(delChar.parentDiv, 'height', 35, 0, 2);
 	chars.splice(index, 1);
-	currentSceneSave(); //.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Something is not right here.
+	currentSceneSave();
 	setTimeout(function(){
 		delChar.del();
 		for(var i=0; i<chars.length; i++) chars[i].parentDiv.id = i;
@@ -267,8 +268,13 @@ function toolsToString(){
 //--------------Current Scene---------------
 function currentSceneSave(){
 	var scene = sceneToString();
-	console.log(scene);
+	console.log("currentSceneSave: " + scene);
 	cookieSet("SIT_currentScene", scene);
+}
+
+function currentSceneLoad(){
+	var scene = cookieGet("SIT_currentScene");
+	if(scene.length > 0) scenePopulate(scene);
 }
 
 //--------------Cookies---------------
@@ -295,9 +301,9 @@ function sceneAdd(){
 		var d = new Date();
 		d.setTime(d.getTime() + (365*24*60*60*1000));
 		var expires = "expires="+d.toGMTString();
-		console.log(sceneToString());
+		console.log("sceneAdd [sceneToString]: " + sceneToString());
 		document.cookie = window.sceneAddName.value + "=" + sceneToString() + "; " + expires;
-		console.log(document.cookie);
+		console.log("sceneAdd [document.cookie]: " + document.cookie);
 		var hasAlready = false;
 		for(var i=0; i<window.sceneAddSelect.length; i++) if(window.sceneAddSelect.options[i].text == window.sceneAddName.value) hasAlready = true;
 		if(!hasAlready){
@@ -318,7 +324,8 @@ function sceneLoad(){
 	cookiesArr = document.cookie.split(";");
 	for(var i=0; i<cookiesArr.length; i++){
 		var cookie = cookiesArr[i].trim();
-		if(cookie.indexOf(sceneName) == 0) scenePopulate(cookie.substring(sceneName.length, cookie.length));
+		if(cookie.indexOf(sceneName) == 0 && cookie.substring(sceneName.length, cookie.length).length > 0){ scenePopulate(cookie.substring(sceneName.length, cookie.length));
+		console.log("sceneLoad: " + cookie.substring(sceneName.length, cookie.length)); }
 	}
 }
 
