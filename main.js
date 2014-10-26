@@ -249,6 +249,7 @@ function nextPhase(){
 //--------------Tools---------------
 function toolsSave(){
 	cookieSet("SIT_tools", toolsToString());
+	console.log("toolsSave(): SIT_tools = " + toolsToString());
 }
 
 function toolsLoad(){
@@ -268,7 +269,7 @@ function toolsToString(){
 //--------------Current Scene---------------
 function currentSceneSave(){
 	var scene = sceneToString();
-	console.log("currentSceneSave: " + scene);
+	console.log("currentSceneSave(): " + scene);
 	cookieSet("SIT_currentScene", scene);
 }
 
@@ -363,7 +364,7 @@ function sceneOptionsLoad(){
 	cookiesArr = document.cookie.split(";");
 	if(m != ""){
 		for(var i=0; i<cookiesArr.length; i++){
-			if(cookiesArr[i].indexOf("tools") != 0){
+			if(cookiesArr[i].trim().substring(0, 4) != "SIT_"){
 				var newScene = document.createElement("option");
 				newScene.text = cookiesArr[i].substring(0, cookiesArr[i].indexOf("="));
 				window.sceneAddSelect.options.add(newScene);
