@@ -256,8 +256,9 @@ function toolsLoad(){
 	var save = cookieGet("SIT_tools");
 	if(save != null){
 		save.split(":");
-		window.toolsStandardRulesRadio.checked = (save[0] == "true");
-		window.toolsAlternativeRulesRadio.checked = !(save[0] == "true");
+		window.toolsStandardRulesRadio.checked = (save == "true"); //After you add more tools, make save[0] and so on. The previous line, save.split() does not produce an array if there is only one element in it.
+		window.toolsAlternativeRulesRadio.checked = !(save == "true");
+		console.log("toolsLoad(): Standart = " + save);
 	}
 }
 
@@ -384,9 +385,9 @@ function sceneToTextLoad(){
 }
 
 function whatsNew(){
-	pulseBorder(window.sceneToTextInput, "borderColor", "88A8B7");
-	pulseBorder(window.sceneToTextGenerateButton, "borderColor", "88A8B7");
-	pulseBorder(window.sceneToTextLoadButton, "borderColor", "88A8B7");
+	//pulseBorder(window.sceneToTextInput, "borderColor", "88A8B7");
+	//pulseBorder(window.sceneToTextGenerateButton, "borderColor", "88A8B7");
+	//pulseBorder(window.sceneToTextLoadButton, "borderColor", "88A8B7");
 }
 
 /*function testRegExp(){
