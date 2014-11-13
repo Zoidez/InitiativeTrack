@@ -4,6 +4,9 @@ var chars = [];
 document.addEventListener("DOMContentLoaded", function(event){whenLoaded();});
 
 function whenLoaded(){
+	//Global variables
+	window.nextButtonPushed = false;
+
 	//catching the tools and options
 	window.toolsStandardRulesRadio = document.getElementById("standardRulesRadio");
 	window.toolsAlternativeRulesRadio = document.getElementById("alternativeRulesRadio");
@@ -15,6 +18,9 @@ function whenLoaded(){
 	window.charAddNpcInitBase = document.getElementById("charNpcInitBaseInput");
 	window.charAddNpcInitD6 = document.getElementById("charNpcInitD6Input");
 	window.charAddRand = document.getElementById("charRandInit");
+	
+	//catching the character browser elements
+	window.nextButton = document.getElementById("nextButton");
 	
 	//catching the scene and cookies processing functions
 	window.sceneAddName = document.getElementById("sceneNameInput");
@@ -143,8 +149,16 @@ function animate(obj, property, start, end, increment){
 }
 
 function rollNPCInitContainer(){
-	if(window.charAddNpc.selectedIndex == 1) animate(window.charAddNpcInitContainer, 'width', 0, 146, 5);
-	else animate(window.charAddNpcInitContainer, 'width', 146, 0, 5);
+	if(window.charAddNpc.selectedIndex == 1){
+		animate(window.charAddNpcInitContainer, 'width', 0, 146, 5);
+		charAddNpcInitBase.style.visibility = "visible";
+		charAddNpcInitD6.style.visibility = "visible";
+	}
+	else{
+		animate(window.charAddNpcInitContainer, 'width', 146, 0, 5);
+		charAddNpcInitBase.style.visibility = "hidden";
+		charAddNpcInitD6.style.visibility = "hidden";
+	}
 }
 
 function animateBorder(element, property){
@@ -237,10 +251,12 @@ function nextPhase(){
 		isInputGood = false;
 		animateBorder(chars[i].initiative, "borderColor");
 	}
-	if(isInputGood){
+	if(isInputGood && !window.nextButtonPushed){
 		for(var i=0; i<chars.length; i++) if(chars[i].isHighlighted) chars[i].sub(10);
 		findMax();
 		currentSceneSave();
+		window.nextButtonPushed = true;
+		setTimeout(function(){ window.nextButtonPushed = false; }, 2000);
 	}
 }
 

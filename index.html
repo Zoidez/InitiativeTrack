@@ -43,7 +43,7 @@
 <hr id="formSeparator">
 
 <div id="charAdd">
-<!<form id="charAddForm">
+<form id="charAddForm">
 	<input id="charNameInput" placeholder="Character Name">
 	<select id="CharNPCSelect" onchange="rollNPCInitContainer()">
 		<option value="player">Player</option>
@@ -53,12 +53,12 @@
 		<input id="charNpcInitBaseInput"></input><div id="charAddNpcText">+</div>
 		<input id="charNpcInitD6Input"></input><div id="charAddNpcText">D6</div>
 	</div></div>
-	<button id="charAddButton" onClick="checkForm()">+</button>
+	<button id="charAddButton" onClick="checkForm(); return false;">+</button>
 	<div id="charRandInit">
-		<button id="charRandInitButton" onClick="randNpc()">Rand</button>
+		<button id="charRandInitButton" onClick="randNpc(); return false;">Rand</button>
 	</div>
-	<button id="charAddButton" onClick="currentSceneSave()">Test</button -->
-<!</form>
+	<!--button id="charAddButton" onClick="currentSceneSave()">Test</button -->
+</form>
 </div><br />
 
 <button id="nextButton" onClick="nextPhase()">Next></button><br />
