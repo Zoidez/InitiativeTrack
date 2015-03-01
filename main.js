@@ -268,9 +268,7 @@ function nextPhase(){
 		}
 	}
 	if(isInputGood && !window.nextButtonPushed){
-		for(var i=0; i<chars.length; i++){
-			if(chars[i].isHighlighted && window.toolsAlternativeRulesRadio.checked) chars[i].sub(10);
-		}
+		for(var i=0; i<chars.length; i++) if(chars[i].isHighlighted && window.toolsAlternativeRulesRadio.checked) chars[i].sub(10);
 		if(allActed && window.toolsStandardRulesRadio.checked){
 			for(var i=0; i<chars.length; i++){
 				chars[i].sub(10);
