@@ -198,7 +198,10 @@ function randNpc(){
 }
 
 function clearRound(){
-	for(var i=0; i<chars.length; i++) chars[i].initiative.value = "";
+	for(var i=0; i<chars.length; i++){
+		chars[i].initiative.value = "";
+		chars[i].acted = false;
+	}
 	animate(window.charAddRand, 'width', 0, 78, 3);
 }
 
@@ -207,18 +210,22 @@ function findMax(){
 		maxInit = [],
 		initInputCorrect = true;
 	for(var i=chars.length-1; i>=0; i--){
-		if(!(chars[i].initiative.value == "" || chars[i].initiative.value == null)) max = i;
+		if((!(chars[i].initiative.value == "" || chars[i].initiative.value == null)) && (!chars[i].acted)) max = i;
+		else chars[i].acted = true;
 		if(!checkInitInput(i)){
 			initInputCorrect = false;
 			animateBorder(chars[i].initiative, "borderColor");
 		}
 	}
+	console.log("findMax(): max:" + max);
 	if(initInputCorrect){
 		for(var i=0; i<chars.length; i++){
-			if(parseInt(chars[i].initiative.value) >= parseInt(chars[max].initiative.value)){
+			console.log("findMax(): chars[" + i + "].acted: " + chars[i].acted);
+			if((parseInt(chars[i].initiative.value) >= parseInt(chars[max].initiative.value)) && (window.toolsStandardRulesRadio.checked ? !chars[i].acted : true)){
 				if(parseInt(chars[i].initiative.value) > parseInt(chars[max].initiative.value)) maxInit = [];
 				max = i;
 				maxInit.push(i);
+				console.log("findMax(): new max found maxInit[]: " + maxInit);
 			}
 		}
 	}
@@ -226,8 +233,13 @@ function findMax(){
 	for(var i=0; i<chars.length; i++) if(chars[i].isHighlighted) chars[i].highlight(false);
 	//--------------Set the New Characters' Highlights---------------
 	if(parseInt(chars[max].initiative.value) <= 0) clearRound();
-	else for(var i=0; i<maxInit.length; i++) chars[maxInit[i]].highlight(true);
+	else for(var i=0; i<maxInit.length; i++){
+		chars[maxInit[i]].highlight(true);
+		chars[maxInit[i]].acted = true;
+	}
 }
+
+
 
 function deleteAll(){
 	var length = chars.length;
@@ -247,16 +259,29 @@ function deleteChar(index, delay){
 
 function nextPhase(){
 	var isInputGood = true;
-	for(var i=0; i<chars.length; i++) if(!(/^\d*$/.test(chars[i].initiative.value))){
-		isInputGood = false;
-		animateBorder(chars[i].initiative, "borderColor");
+	var allActed = true;
+	for(var i=0; i<chars.length; i++){
+		if(!chars[i].acted && window.toolsStandardRulesRadio.checked) allActed = false;
+		if(!(/^\d*$/.test(chars[i].initiative.value))){
+			isInputGood = false;
+			animateBorder(chars[i].initiative, "borderColor");
+		}
 	}
 	if(isInputGood && !window.nextButtonPushed){
-		for(var i=0; i<chars.length; i++) if(chars[i].isHighlighted) chars[i].sub(10);
+		for(var i=0; i<chars.length; i++){
+			if(chars[i].isHighlighted && window.toolsAlternativeRulesRadio.checked) chars[i].sub(10);
+		}
+		if(allActed && window.toolsStandardRulesRadio.checked){
+			for(var i=0; i<chars.length; i++){
+				chars[i].sub(10);
+				if(parseInt(chars[i].initiative.value) != 0) chars[i].acted = false;
+				console.log("nextPhase(): chars[" + i + "].acted: " + chars[i].acted);
+			}
+		}
 		findMax();
 		currentSceneSave();
 		window.nextButtonPushed = true;
-		setTimeout(function(){ window.nextButtonPushed = false; }, 2000);
+		setTimeout(function(){ window.nextButtonPushed = false; }, 1000);
 	}
 }
 
@@ -292,7 +317,7 @@ function currentSceneSave(){
 
 function currentSceneLoad(){
 	var scene = cookieGet("SIT_currentScene");
-	if(scene.length > 0) scenePopulate(scene);
+	if(typeof scene !== "undefined" && scene.length > 0) scenePopulate(scene);
 }
 
 //--------------Cookies---------------

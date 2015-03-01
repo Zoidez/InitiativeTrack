@@ -6,6 +6,7 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, initInput, cou
 	this.baseInit = parseInt(baseInit);
 	this.D6Init = parseInt(D6Init);
 	this.nameString = charNameAtt;
+	this.acted = false;
 
 	//-----------Initializing the methods-----------
 	this.animateFloat = animateFloat;
