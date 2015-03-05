@@ -1,0 +1,72 @@
+body {
+	font-family: Arial, Verdana, Lucida Console;
+	font-weight: normal;
+	font-size: 20px;
+	color: F0F0F0;
+	#background-color: 202025;
+	background: -webkit-linear-gradient(rgba(32,32,37, 1), rgba(32, 32, 49, 1)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(rgba(32,32,37, 1) 70%, rgba(32, 44, 49, 1)); /* Standard syntax */
+}
+}
+div {
+	overflow: hidden;
+	margin: 5px;
+}
+span {
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+input {
+	font-family: Verdana, Arial, Lucida Console;
+	font-weight: bold;
+	font-size: 18px;
+	color: #FFFFFF;
+	background-color: #393939;
+	border: 0px solid #F0F0F0;
+	border-radius: 3px;
+	outline: none;
+}
+input:hover, select:hover, button:hover, input:focus, select:focus, button:focus {
+	background-color: #404040;
+}
+.depth {
+	font-family: Helvetica;
+	color: black;
+	font-size: 35px;
+	font-weight: bold;
+	position: relative;
+}
+.depth:before, .depth:after {
+	content: attr(title);
+    color: rgba(128,128,128,.1);
+    position: absolute;
+}
+.depth:before { top: 1pt; left: 1pt }
+.depth:after  { top: 1pt; left: 1pt }
+#backgroundGlow1 {
+	width: 600px;
+	height: 500px;
+	background: -webkit-radial-gradient(50% 50%, closest-side, rgba(32,64,32, 1), rgba(32, 32, 40, 0)); /* Safari 5.1 to 6.0 */
+	background: -o-radial-gradient(50% 50%, closest-side, rgba(32,64,32, 1), rgba(32, 32, 40, 0)); /* For Opera 11.6 to 12.0 */
+	background: -moz-radial-gradient(50% 50%, closest-side, rgba(32,64,32, 1), rgba(32, 32, 40, 0)); /* For Firefox 3.6 to 15 */
+	background: radial-gradient(closest-side at 50% 50%, rgba(32,64,32, 1), rgba(32, 32, 40, 0)); /* Standard syntax */
+	position: fixed;
+	bottom: -250px;
+	left: -100px;
+	z-index: 0;
+}
+#backgroundGlow2 {
+	width: 600px;
+	height: 500px;
+	background: -webkit-radial-gradient(50% 50%, closest-side, rgba(32,64,64, 1), rgba(32, 32, 40, 0)); /* Safari 5.1 to 6.0 */
+	background: -o-radial-gradient(50% 50%, closest-side, rgba(32,64,64, 1), rgba(32, 32, 40, 0)); /* For Opera 11.6 to 12.0 */
+	background: -moz-radial-gradient(50% 50%, closest-side, rgba(32,64,64, 1), rgba(32, 32, 40, 0)); /* For Firefox 3.6 to 15 */
+	background: radial-gradient(closest-side at 50% 50%, rgba(32,64,64, 1), rgba(32, 32, 40, 0)); /* Standard syntax */
+	position: fixed;
+	bottom: -200px;
+	left: 700px;
+	z-index: 0;
+}
