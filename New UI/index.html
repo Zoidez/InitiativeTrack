@@ -1,4 +1,3 @@
-<!DOCTYPE HTML5>
 <html lang="en-US">
 <head>
 	<title>Shadowrun Initiative Tracker</title>
@@ -7,13 +6,42 @@
 	<meta name="Description" content="Shadowrun 5th edition online initiative tracker. Add your characters, set their initiative, customize and save scenes.">
 	<link rel="icon" href="./favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="main.css">
-	<link rel="import" href="tracker.html">
 	<link rel="import" href="./tracker.html">
 </head>
 <body>
-<div class="depth" title="Shadowrun Initiative Tracker">Shadowrun Initiative Tracker</div>
+<script type="text/javascript" src="./main.js"></script>
+<script type="text/javascript" src="./character.js"></script>
+
 <!--div id="backgroundGlow1"></div>
 <div id="backgroundGlow2"></div-->
-<input type="text"></input>
+<!--div id="backgroundGlow3">
+	<div id="backgroundGlow3InnerLeft"></div><!--
+	--><!--div id="backgroundGlow3InnerRight">
+		<div id="backgroundGlow3InnerRightInner"></div>
+	</div>
+</div>
+<!--div id="backgroundGlow4"></div-->
+<div id="background-top"></div>
+<div id="masterContainer">
+	<div id="logo" title="Shadowrun Initiative Tracker">Shadowrun Initiative Tracker</div>
+	<div id="toolsContainer">
+		<button id="delAllButton">Delete All</button>
+		Rules:
+		<input type="radio" id="standardRulesRadio" onChange="toolsSave" name="rule" checked="true">Standard</input>
+		<input type="radio" id="alternativeRuleRadio" onChange="toolsSave" name="rule" checked="false">Alternative</input>
+	</div>
+	<div id="sceneBrowserMasterContainer">
+		<div id="sceneBrowserNameContainer"><h1>Name</h1></div><!--
+		--><div id="sceneBrowserInitiativeContainer"><h1>Initiative</h1></div>
+		<div class="charContainer">
+			<button id="charDelButton"><div id="charDelCross">☓</div></button><!--
+			--></!--><div id="charName">Snake Visgorovisch</div><!--
+			--><input id="charInitInput"></input><!--
+			--><button id="sub5Button">-5</button><!--
+			--><button id="sub10Button">-10</button>
+		</div>
+	</div>
+</div>
+<div id="basementMasterContainer">F</div>
 </body>
 </html>

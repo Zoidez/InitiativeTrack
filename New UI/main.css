@@ -1,13 +1,17 @@
 body {
-	font-family: Arial, Verdana, Lucida Console;
+	height: 170%;
+	font-family: Verdana, Lucida Console;
 	font-weight: normal;
 	font-size: 20px;
 	color: F0F0F0;
-	#background-color: 202025;
-	background: -webkit-linear-gradient(rgba(32,32,37, 1), rgba(32, 32, 49, 1)); /* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(rgba(32,32,37, 1) 70%, rgba(32, 44, 49, 1)); /* Standard syntax */
+	min-width: 400px;
+	max-width: 1200px;
+	background-color: #202C31;
+	#background: -webkit-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Safari 5.1 to 6.0 */
+	#background: -o-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Opera 11.1 to 12.0 */
+	#background: -moz-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Firefox 3.6 to 15 */
+	#background: linear-gradient(rgba(32,32,37, 1) 70%, rgba(32, 44, 49, 1)); /* Standard syntax */
+	background-repeat: no-repeat;
 }
 }
 div {
@@ -19,7 +23,7 @@ span {
 	padding: 0px;
 	margin: 0px;
 }
-input {
+input, select, button {
 	font-family: Verdana, Arial, Lucida Console;
 	font-weight: bold;
 	font-size: 18px;
@@ -28,24 +32,127 @@ input {
 	border: 0px solid #F0F0F0;
 	border-radius: 3px;
 	outline: none;
+	margin: 3px;
 }
 input:hover, select:hover, button:hover, input:focus, select:focus, button:focus {
 	background-color: #404040;
 }
-.depth {
-	font-family: Helvetica;
+h1 {
+	font-size: 25px;
+	color: #DDFFDD;
+}
+#background-top {
+	width: 100%;
+	height: 100%;
+	background: -webkit-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(rgba(32,32,37, 1) 70%, rgba(32, 44, 49, 1)); /* Standard syntax */
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: -10;
+}
+#logo {
+	font-family: Verdana;
 	color: black;
 	font-size: 35px;
 	font-weight: bold;
 	position: relative;
+	padding-bottom: 10px;
 }
-.depth:before, .depth:after {
+#logo:before, #logo:after {
 	content: attr(title);
     color: rgba(128,128,128,.1);
     position: absolute;
 }
-.depth:before { top: 1pt; left: 1pt }
-.depth:after  { top: 1pt; left: 1pt }
+#logo:before { top: 1px; left: 1px }
+#logo:after  { top: 1px; left: 1px }
+#masterContainer {
+	width: 100%;
+	height: 59%;
+}
+#toolsContainer {
+	width: 100%;
+}
+#sceneBrowserMasterContainer {
+	width: 100%;
+}
+#sceneBrowserNameContainer {
+	width: 20%;
+	min-width: 200px;
+	padding-left: 35px;
+	display: inline-block;
+}
+#sceneBrowserNameContainer:hover {
+	cursor: hand;
+}
+#sceneBrowserInitiativeContainer {
+	display: inline-block;
+}
+@keyframes unroll {
+    0% {height: 0px;}
+	12% {height: 7px;}
+	25% {height: 13px;}
+	37% {height: 19px;}
+	50% {height: 23px;}
+	62% {height: 26px;}
+	75% {height: 29px;}
+	87% {height: 30px;}
+    100% {height: 31px;}
+}
+@-webkit-keyframes unroll {
+	0% {height: 0px;}
+	12% {height: 10px;}
+	25% {height: 18px;}
+	37% {height: 24px;}
+	50% {height: 27px;}
+	62% {height: 29px;}
+	75% {height: 30px;}
+	87% {height: 31px;}
+    100% {height: 31px;}
+}
+.charContainer, .charContainerNpc {
+	width: 100%;
+	height: 31px;
+	white-space: nowrap;
+	#background-color: #EEEEEE;
+	animation-name: unroll;
+	animation-duration: 1s;
+	animation-timing-function: ease-out;
+	-webkit-animation-name: unroll;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-timing-function: ease-out;
+	
+	overflow: hidden;
+}
+#charDelButton {
+	width: 26px;
+	height: 25px;
+}
+#charDelCross {
+	font-family: Impact;
+	font-weight: normal;
+	position: relative;
+	left: -2px;
+	top: -1px;
+}
+#charName {
+	width: 20%;
+	min-width: 200px;
+	font-size: 20px;
+	display: inline-block;
+	padding-left: 5px;
+}
+#charInitInput {
+	width: 25px;
+}
+#basementMasterContainer {
+	width: 100%;
+	height: 41%;
+}
+_____________________________________
 #backgroundGlow1 {
 	width: 600px;
 	height: 500px;
@@ -69,4 +176,51 @@ input:hover, select:hover, button:hover, input:focus, select:focus, button:focus
 	bottom: -200px;
 	left: 700px;
 	z-index: 0;
+}
+#backgroundGlow3 {
+	width: 100%;
+	height: 300px;
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	z-index: 0;
+	background: -webkit-linear-gradient(left, rgba(32,32,37, 1) 40%, rgba(64, 25, 33, 0)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(right, rgba(32,32,37, 1) 40%, rgba(64, 25, 33, 0)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, rgba(32,32,37, 1) 40%, rgba(64, 25, 33, 0)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, rgba(32,32,37, 1) 1%, rgba(64, 25, 33, 0)); /* Standard syntax */
+}
+#backgroundGlow3InnerLeft {
+	width: 20%;
+	height: 300px;
+	background-color: #202025;
+	display: inline-block;
+}
+#backgroundGlow3InnerRight {
+	width: 80%;
+	height: 300px;
+	background: -webkit-linear-gradient(rgba(32,32,37, 0) 40%, rgba(96, 49, 33, 1)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(rgba(32,32,37, 0) 40%, rgba(96, 37, 49, 1)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(rgba(32,32,37, 0) 40%, rgba(96, 37, 49, 1)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(rgba(32,32,37, 0) 40%, rgba(96, 37, 49, 1)); /* Standard syntax */
+	display: inline-block;
+}
+#backgroundGlow3InnerRightInner {
+	width: 100%;
+	height: 300px;
+	background: -webkit-linear-gradient(left, rgba(32,32,37, 1) 40%, rgba(64, 25, 33, 0)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(right, rgba(32,32,37, 1) 40%, rgba(64, 25, 33, 0)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, rgba(32,32,37, 1) 40%, rgba(64, 25, 33, 0)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, rgba(32,32,37, 1) 1%, rgba(64, 25, 33, 0)); /* Standard syntax */
+}
+#backgroundGlow4 {
+	width: 50%;
+	height: 300px;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 0;
+	background: -webkit-linear-gradient(rgba(32,32,37, 0) 1%, rgba(20, 64, 33, 1)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(rgba(32,32,37, 0) 1%, rgba(20, 64, 33, 1)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(rgba(32,32,37, 0) 1%, rgba(20, 64, 33, 1)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(rgba(32,32,37, 0) 1%, rgba(20, 64, 33, 1)); /* Standard syntax */
 }
