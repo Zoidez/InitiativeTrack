@@ -50,9 +50,8 @@ function fillContent(){
 	//chars[3].initiative.value = "30";
 	chars[4].initiative.value = "31";
 }
-
 function checkForm() {
-	var npc = document.getElementById("CharNPCSelect");
+	var npc = window.charAddNpc;
 	var npcSelected = (window.charAddNpc.selectedIndex == 1);
 	var isInputGood = true;
 	if(!isInputUnique(chars, "nameString", window.charAddName.value.trim(), true, window.charAddName, "name")){

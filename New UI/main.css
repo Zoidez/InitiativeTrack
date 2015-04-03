@@ -1,12 +1,12 @@
 body {
-	height: 170%;
+	height: 180%;
 	font-family: Verdana, Lucida Console;
 	font-weight: normal;
 	font-size: 20px;
 	color: F0F0F0;
 	min-width: 400px;
 	max-width: 1200px;
-	background-color: #202C31;
+	background-color: #202C39;
 	#background: -webkit-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Safari 5.1 to 6.0 */
 	#background: -o-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Opera 11.1 to 12.0 */
 	#background: -moz-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Firefox 3.6 to 15 */
@@ -44,10 +44,10 @@ h1 {
 #background-top {
 	width: 100%;
 	height: 100%;
-	background: -webkit-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(rgba(32,32,37, 1) 70%, rgba(32, 44, 49, 1)); /* Standard syntax */
+	background: -webkit-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 57, 1)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 57, 1)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 57, 1)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(rgba(32,32,37, 1) 70%, rgba(32, 44, 57, 1)); /* Standard syntax */
 	background-repeat: no-repeat;
 	position: absolute;
 	top: 0px;
@@ -71,7 +71,7 @@ h1 {
 #logo:after  { top: 1px; left: 1px }
 #masterContainer {
 	width: 100%;
-	height: 59%;
+	height: 50%;
 }
 #toolsContainer {
 	width: 100%;
@@ -83,6 +83,7 @@ h1 {
 	width: 20%;
 	min-width: 200px;
 	padding-left: 35px;
+	margin-bottom: 0px;
 	display: inline-block;
 }
 #sceneBrowserNameContainer:hover {
@@ -90,6 +91,7 @@ h1 {
 }
 #sceneBrowserInitiativeContainer {
 	display: inline-block;
+	margin-bottom: 0px;
 }
 @keyframes unroll {
     0% {height: 0px;}
@@ -150,7 +152,34 @@ h1 {
 }
 #basementMasterContainer {
 	width: 100%;
-	height: 41%;
+	height: 50%;
+}
+#charAddLabel {
+	text-align: center;
+}
+#charAddForm {
+	width: 100%;
+	text-align: center;
+}
+#charAddForm input, #charAddForm select, #charAddForm button {
+	font-family: Verdana, Arial, Lucida Console;
+	font-weight: bold;
+	font-size: 18px;
+	color: #FFFFFF;
+	background-color: #394652;
+	border: 0px solid #F0F0F0;
+	border-radius: 3px;
+	outline: none;
+	margin: 3px;
+}
+#charAddForm input:hover, #charAddForm select:hover, #charAddForm button:hover, #charAddForm input:focus, #charAddForm select:focus, #charAddForm button:focus {
+	background-color: #404C59;
+}
+#charNameInput {
+	width: 200px;
+}
+#charNpcInitBaseInput, #charNpcInitD6Input {
+	width: 28px;
 }
 _____________________________________
 #backgroundGlow1 {

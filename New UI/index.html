@@ -10,6 +10,7 @@
 </head>
 <body>
 <script type="text/javascript" src="./main.js"></script>
+<script type="text/javaScript" src="./charAdd.js"></script>
 <script type="text/javascript" src="./character.js"></script>
 
 <!--div id="backgroundGlow1"></div>
@@ -33,15 +34,25 @@
 	<div id="sceneBrowserMasterContainer">
 		<div id="sceneBrowserNameContainer"><h1>Name</h1></div><!--
 		--><div id="sceneBrowserInitiativeContainer"><h1>Initiative</h1></div>
-		<div class="charContainer">
-			<button id="charDelButton"><div id="charDelCross">☓</div></button><!--
-			--></!--><div id="charName">Snake Visgorovisch</div><!--
+		<div class="charContainer"><!--
+			--><button id="charDelButton"><div id="charDelCross">☓</div></button><!--
+			--><div id="charName">Snake Visgorovisch</div><!--
 			--><input id="charInitInput"></input><!--
 			--><button id="sub5Button">-5</button><!--
-			--><button id="sub10Button">-10</button>
-		</div>
+			--><button id="sub10Button">-10</button><!--
+		--></div>
 	</div>
 </div>
-<div id="basementMasterContainer">F</div>
+<div id="basementMasterContainer">
+	<div id="charAddLabel"><h1>Add Character</h1></div>
+	<form id="charAddForm">
+		<input id="charNameInput" placeholder="Character Name"></input>
+		<button id="charPcButton" onClick="pcNpcButtonOnClick(true); return false;">PC</button><!--
+	 --><button id="charNpcButton" onClick="pcNpcButtonOnClick(false); return false">NPC</button>
+		<input id="charNpcInitBaseInput"></input>+<!--
+	 --><input id="charNpcInitD6Input"></input>D6
+	</form>
+	
+</div>
 </body>
 </html>
