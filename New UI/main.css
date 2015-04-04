@@ -4,7 +4,7 @@ body {
 	font-weight: normal;
 	font-size: 20px;
 	color: F0F0F0;
-	min-width: 400px;
+	min-width: 700px;
 	max-width: 1200px;
 	background-color: #202C39;
 	#background: -webkit-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 49, 1)); /* For Safari 5.1 to 6.0 */
@@ -23,7 +23,7 @@ span {
 	padding: 0px;
 	margin: 0px;
 }
-input, select, button {
+input, textarea, select, button {
 	font-family: Verdana, Arial, Lucida Console;
 	font-weight: bold;
 	font-size: 18px;
@@ -34,7 +34,7 @@ input, select, button {
 	outline: none;
 	margin: 3px;
 }
-input:hover, select:hover, button:hover, input:focus, select:focus, button:focus {
+input:hover, textarea:hover, select:hover, button:hover, input:focus, textarea:focus, select:focus, button:focus {
 	background-color: #404040;
 }
 h1 {
@@ -44,6 +44,7 @@ h1 {
 #background-top {
 	width: 100%;
 	height: 100%;
+	min-width: 700px;
 	background: -webkit-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 57, 1)); /* For Safari 5.1 to 6.0 */
 	background: -o-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 57, 1)); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(rgba(32,32,37, 1), rgba(32, 44, 57, 1)); /* For Firefox 3.6 to 15 */
@@ -159,9 +160,10 @@ h1 {
 }
 #charAddForm {
 	width: 100%;
+	max-height: 30px;
 	text-align: center;
 }
-#charAddForm input, #charAddForm select, #charAddForm button {
+#charAddForm input, #charAddform textarea, #charAddForm select, #charAddForm button {
 	font-family: Verdana, Arial, Lucida Console;
 	font-weight: bold;
 	font-size: 18px;
@@ -172,7 +174,7 @@ h1 {
 	outline: none;
 	margin: 3px;
 }
-#charAddForm input:hover, #charAddForm select:hover, #charAddForm button:hover, #charAddForm input:focus, #charAddForm select:focus, #charAddForm button:focus {
+#charAddForm input:hover, #charAddform textarea:hover, #charAddForm select:hover, #charAddForm button:hover, #charAddForm input:focus, #charAddform textarea:focus, #charAddForm select:focus, #charAddForm button:focus {
 	background-color: #404C59;
 }
 #charNameInput {
@@ -180,6 +182,13 @@ h1 {
 }
 #charNpcInitBaseInput, #charNpcInitD6Input {
 	width: 28px;
+}
+#charWoundModSelect {
+	width: 47px;
+}
+#charNotes {
+	width: 200px;
+	height: 24px;
 }
 _____________________________________
 #backgroundGlow1 {

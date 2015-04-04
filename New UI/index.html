@@ -6,7 +6,6 @@
 	<meta name="Description" content="Shadowrun 5th edition online initiative tracker. Add your characters, set their initiative, customize and save scenes.">
 	<link rel="icon" href="./favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="main.css">
-	<link rel="import" href="./tracker.html">
 </head>
 <body>
 <script type="text/javascript" src="./main.js"></script>
@@ -51,8 +50,20 @@
 	 --><button id="charNpcButton" onClick="pcNpcButtonOnClick(false); return false">NPC</button>
 		<input id="charNpcInitBaseInput"></input>+<!--
 	 --><input id="charNpcInitD6Input"></input>D6
+		<select id="charWoundModSelect">
+			<option value="0">0</option>
+			<option value="1">-1</option>
+			<option value="2">-2</option>
+			<option value="3">-3</option>
+			<option value="4">-4</option>
+			<option value="5">-5</option>
+			<option value="6">-6</option>
+			<option value="7">-7</option>
+			<option value="8">-8</option>
+			<option value="9">-9</option>
+		</select>wound modifier
+		<textarea id="charNotes" placeholder="Notes"></textarea>
 	</form>
-	
 </div>
 </body>
 </html>
