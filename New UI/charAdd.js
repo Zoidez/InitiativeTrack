@@ -117,7 +117,6 @@ function charAdd(counter) {
 
 	function pcNpcButtonOnClick(isPc) {
 		this.isPc = isPc;
-		console.log(this.pc);
 		var pcButton = this.pc;//document.getElementById("charPcButton");
 		var npcButton = this.npc;//document.getElementById("charNpcButton");
 		if(isPc){
