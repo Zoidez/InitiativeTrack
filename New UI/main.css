@@ -160,8 +160,9 @@ h1 {
 }
 #charAddForm {
 	width: 100%;
-	max-height: 30px;
+	max-height: 60px;
 	text-align: center;
+	margin-bottom: 3px;
 }
 #charAddForm input, #charAddform textarea, #charAddForm select, #charAddForm button {
 	font-family: Verdana, Arial, Lucida Console;
@@ -180,14 +181,17 @@ h1 {
 #charNameInput {
 	width: 200px;
 }
-#charNpcInitBaseInput, #charNpcInitD6Input {
+#charNpcInitBaseInput {
 	width: 28px;
+}
+#charNpcInitD6Select {
+	width: 37px;
 }
 #charWoundModSelect {
 	width: 47px;
 }
 #charNotes {
-	width: 200px;
+	width: 660px;
 	height: 24px;
 }
 _____________________________________

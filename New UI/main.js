@@ -1,11 +1,15 @@
 
 var chars = [];
+var forms = [];
 
 document.addEventListener("DOMContentLoaded", function(event){whenLoaded();});
 
 function whenLoaded(){
 	//Global variables
 	window.nextButtonPushed = false;
+	
+	//Adding elements to the page
+	forms.push(new charAdd(0));
 
 	//catching the tools and options
 	window.toolsStandardRulesRadio = document.getElementById("standardRulesRadio");
@@ -49,6 +53,12 @@ function fillContent(){
 	//chars[2].initiative.value = "32";
 	//chars[3].initiative.value = "30";
 	chars[4].initiative.value = "31";
+}
+function addForm(counter) {
+	if(forms[counter].check || forms.length <= 1) {
+		var newForm = new charAdd(forms.length);
+		forms.push(newForm);
+	}
 }
 function checkForm() {
 	var npc = window.charAddNpc;
