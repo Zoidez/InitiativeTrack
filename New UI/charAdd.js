@@ -38,8 +38,10 @@ function charAdd(counter) {
 	this.name.setAttribute("placeholder", "Character Name");
 	this.name.setAttribute("onFocus", "addForm("+counter+")");
 	this.pc.setAttribute("id", "charPcButton");
+	this.pc.setAttribute("type", "button");
 	this.pc.setAttribute("onClick", "forms["+counter+"].pcNpcButtonOnClick(true); return false;");
 	this.npc.setAttribute("id", "charNpcButton");
+	this.npc.setAttribute("type", "button");
 	this.npc.setAttribute("onClick", "forms["+counter+"].pcNpcButtonOnClick(false); return false;");
 	this.baseInit.setAttribute("id", "charNpcInitBaseInput");
 	this.d6Init.setAttribute("id", "charNpcInitD6Select");
@@ -117,6 +119,7 @@ function charAdd(counter) {
 
 	function pcNpcButtonOnClick(isPc) {
 		this.isPc = isPc;
+		console.log(this);
 		var pcButton = this.pc;//document.getElementById("charPcButton");
 		var npcButton = this.npc;//document.getElementById("charNpcButton");
 		if(isPc){
