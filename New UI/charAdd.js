@@ -39,10 +39,8 @@ function charAdd(counter) {
 	this.name.setAttribute("onFocus", "addForm("+counter+")");
 	this.pc.setAttribute("id", "charPcButton");
 	this.pc.setAttribute("type", "button");
-	this.pc.setAttribute("onClick", "forms["+counter+"].pcNpcButtonOnClick(true); return false;");
 	this.npc.setAttribute("id", "charNpcButton");
 	this.npc.setAttribute("type", "button");
-	this.npc.setAttribute("onClick", "forms["+counter+"].pcNpcButtonOnClick(false); return false;");
 	this.baseInit.setAttribute("id", "charNpcInitBaseInput");
 	this.d6Init.setAttribute("id", "charNpcInitD6Select");
 	this.initOption1.setAttribute("value", "1");

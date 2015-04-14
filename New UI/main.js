@@ -55,7 +55,7 @@ function fillContent(){
 	chars[4].initiative.value = "31";
 }
 function addForm(counter) {
-	if(forms[counter].check || forms.length <= 1) {
+	if(forms[counter].check() || forms.length <= 1) {
 		var newForm = new charAdd(forms.length);
 		forms.push(newForm);
 	}
