@@ -55,11 +55,15 @@ function fillContent(){
 	chars[4].initiative.value = "31";
 }
 function addForm(counter) {
-	if(forms[counter].check() || forms.length <= 1) {
-		var newForm = new charAdd(forms.length);
-		forms.push(newForm);
+	var filledForms = 0;
+	for(var i=0; i<forms.length; i++){
+		if(forms[i].check()) filledForms++;
+	}
+	if((filledForms+1)>=forms.length) {
+		forms.push(new charAdd(forms.length));
 	}
 }
+function pcNpcButtonOnClick(formNum, isPc){	forms[formNum].pcNpcButtonColor(isPc); }
 function checkForm() {
 	var npc = window.charAddNpc;
 	var npcSelected = (window.charAddNpc.selectedIndex == 1);

@@ -1,11 +1,10 @@
 function charAdd(counter) {
 	
 	//-----------Creating the HTML-independent fields-----------
-	this.isPc;
 	
 	//-----------Initializing the methods-----------
 	this.check = check;
-	this.pcNpcButtonOnClick = pcNpcButtonOnClick;
+	this.pcNpcButtonColor = pcNpcButtonColor;
 
 	//-----------Creating the HTML fields-----------
 	this.form = document.createElement("form");
@@ -32,6 +31,18 @@ function charAdd(counter) {
 	this.woundOption9 = document.createElement("option");
 	this.notes = document.createElement("textarea");
 	
+	//-----------Creating the text between the fields-----------
+	this.space1Text = document.createElement("div");
+	this.space1Text.setAttribute("id", "space1Text");
+	this.space2Text = document.createElement("div");
+	this.space2Text.setAttribute("id", "space2Text");
+	this.plusText = document.createElement("div");
+	this.plusText.setAttribute("id", "plusText");
+	this.d6Text = document.createElement("div");
+	this.d6Text.setAttribute("id", "d6Text");
+	this.woundText = document.createElement("div");
+	this.woundText.setAttribute("id", "woundText");
+		
 	//-----------Assigning the classes and ids to the elements-----------
 	this.form.setAttribute("id", "charAddForm");
 	this.name.setAttribute("id", "charNameInput");
@@ -39,8 +50,10 @@ function charAdd(counter) {
 	this.name.setAttribute("onFocus", "addForm("+counter+")");
 	this.pc.setAttribute("id", "charPcButton");
 	this.pc.setAttribute("type", "button");
+	this.pc.setAttribute("onClick", "pcNpcButtonOnClick("+counter+", true)");
 	this.npc.setAttribute("id", "charNpcButton");
 	this.npc.setAttribute("type", "button");
+	this.npc.setAttribute("onClick", "pcNpcButtonOnClick("+counter+", false)");
 	this.baseInit.setAttribute("id", "charNpcInitBaseInput");
 	this.d6Init.setAttribute("id", "charNpcInitD6Select");
 	this.initOption1.setAttribute("value", "1");
@@ -80,25 +93,31 @@ function charAdd(counter) {
 	this.woundOption7.innerHTML = "-7";
 	this.woundOption8.innerHTML = "-8";
 	this.woundOption9.innerHTML = "-9";
+	this.space1Text.innerHTML = " ";
+	this.space2Text.innerHTML = " ";
+	this.plusText.innerHTML = "+";
+	this.d6Text.innerHTML = "D6 ";
+	this.woundText.innerHTML = "wound modifier";
 
 	//-----------Getting the parent element to insert into-----------
-	var parent = document.getElementById("basementMasterContainer");
+	var parent = document.getElementById("formBrowserContainer");
 	
 	//-----------Inserting the elements-----------
 	this.form.appendChild(this.name);
-	this.form.innerHTML+=" ";
+	this.form.appendChild(this.space1Text);
 	this.form.appendChild(this.pc);
 	this.form.appendChild(this.npc);
-	this.form.innerHTML+=" ";
+	this.form.appendChild(this.npc);
+	this.form.appendChild(this.space2Text);
 	this.form.appendChild(this.baseInit);
-	this.form.innerHTML+="+";
+	this.form.appendChild(this.plusText);
 	this.d6Init.appendChild(this.initOption1);
 	this.d6Init.appendChild(this.initOption2);
 	this.d6Init.appendChild(this.initOption3);
 	this.d6Init.appendChild(this.initOption4);
 	this.d6Init.appendChild(this.initOption5);
 	this.form.appendChild(this.d6Init);
-	this.form.innerHTML+="D6 ";
+	this.form.appendChild(this.d6Text);
 	this.woundMod.appendChild(this.woundOption0);
 	this.woundMod.appendChild(this.woundOption1);
 	this.woundMod.appendChild(this.woundOption2);
@@ -110,19 +129,18 @@ function charAdd(counter) {
 	this.woundMod.appendChild(this.woundOption8);
 	this.woundMod.appendChild(this.woundOption9);
 	this.form.appendChild(this.woundMod);
-	this.form.innerHTML+="wound modifier";
+	this.form.appendChild(this.woundText);
 	this.form.appendChild(document.createElement("br"));
 	this.form.appendChild(this.notes);
 	parent.appendChild(this.form);
 
-	function pcNpcButtonOnClick(isPc) {
+	function pcNpcButtonColor(isPc) {
 		this.isPc = isPc;
-		console.log(this);
-		var pcButton = this.pc;//document.getElementById("charPcButton");
-		var npcButton = this.npc;//document.getElementById("charNpcButton");
+		var pcButton = this.pc;
+		var npcButton = this.npc;
 		if(isPc){
-			npcButton.style.backgroundColor = "#394652";
-			pcButton.style.backgroundColor = "#397652";
+			this.npc.style.backgroundColor = "#394652";
+			this.pc.style.backgroundColor = "#397652";;
 		}
 		else {
 			pcButton.style.backgroundColor = "#394652";
@@ -132,9 +150,13 @@ function charAdd(counter) {
 
 	function check() {
 		var isInputGood = true;
-		if(this.name == "" || this.name == null) isInputGood = false;
-		if(this.isPc != true || this.isPc != false) isInputGood = false;
-		if(this.baseInit == "" || this.baseInit == null) isInputGood = false;
+		console.log("this.name: ");
+		console.log(this.name);
+		if(this.name.value == "" || this.name.value == null) isInputGood = false;
+		//if(this.isPc != true || this.isPc != false) isInputGood = false;
+		if(this.baseInit.value == "" || this.baseInit.value == null) isInputGood = false;
+		console.log("this.baseInit: ");
+		console.log(this.baseInit);
 		return isInputGood;
 	}
 }
