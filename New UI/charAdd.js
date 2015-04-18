@@ -150,9 +150,15 @@ function charAdd(counter) {
 
 	function check() {
 		var isInputGood = true;
+		var baseInitText = this.baseInit.value;
+		var regexp = /^\d+$/;
 		console.log("this.name: ");
 		console.log(this.name);
 		if(this.name.value == "" || this.name.value == null) isInputGood = false;
+		if(!(regexp.test(baseInitText) || baseInitText == "")){
+			isInputGood = false;
+			console.log("Regexp did not go through.");
+		}
 		//if(this.isPc != true || this.isPc != false) isInputGood = false;
 		if(this.baseInit.value == "" || this.baseInit.value == null) isInputGood = false;
 		console.log("this.baseInit: ");
