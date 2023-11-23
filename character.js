@@ -25,9 +25,14 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, initInput, cou
 	this.initiative = document.createElement("input");
 	this.floatNumber = document.createElement("div");
 	this.sub5Container = document.createElement("div");
-	this.sub5 = document.createElement("button");
+	this.sub5 = document.createElement("button");	
 	this.sub10Container = document.createElement("div");
 	this.sub10 = document.createElement("button");
+	
+	// New code
+	
+	this.sub7Container = document.createElement("div");
+	this.sub7 = document.createElement("button");
 
 	//-----------Assigning the classes and ids to the elements-----------
 	if(npcSelectedAtt) this.parentDiv.setAttribute("class", "charContainerNpc");
@@ -51,10 +56,19 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, initInput, cou
 	this.sub5.setAttribute("class", "sub5Button");
 	this.sub5.setAttribute("id", "sub5Button");
 	this.sub5.setAttribute("onClick", "chars[this.parentElement.parentElement.id].sub(5)");
+	
+	
 	this.sub10Container.setAttribute("id", "subContainer");
 	this.sub10.setAttribute("class", "sub10Button");
 	this.sub10.setAttribute("id", "sub10Button");
 	this.sub10.setAttribute("onClick", "chars[this.parentElement.parentElement.id].sub(10)");
+	
+	// New code
+	
+	this.sub7Container.setAttribute("id", "subContainer");
+	this.sub7.setAttribute("class", "sub7Button");
+	this.sub7.setAttribute("id", "sub7Button");
+	this.sub7.setAttribute("onClick", "chars[this.parentElement.parentElement.id].sub(7)");
 
 	//-----------Filling the elements-----------
 	this.delMinus.innerHTML = "-";
@@ -64,6 +78,10 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, initInput, cou
 	this.floatNumber.innerHTML = "10";
 	this.sub5.innerHTML = "-5";
 	this.sub10.innerHTML = "-10";
+	
+	// New code
+	
+	this.sub7.innerHTML = "-7";
 
 	//-----------Getting the parent element to insert into-----------
 	var insertChar = document.getElementById("charMasterContainer");
@@ -78,8 +96,17 @@ function character(charNameAtt, npcSelectedAtt, baseInit, D6Init, initInput, cou
 	this.parentDiv.appendChild(this.initiativeContainer);
 	this.sub5Container.appendChild(this.sub5);
 	this.parentDiv.appendChild(this.sub5Container);
+	
+	// New code
+	
+	this.sub7Container.appendChild(this.sub7);
+	this.parentDiv.appendChild(this.sub7Container);
+	// End New code
+	
 	this.sub10Container.appendChild(this.sub10);
 	this.parentDiv.appendChild(this.sub10Container);
+	
+	
 	insertChar.appendChild(this.parentDiv);
 	animate(this.parentDiv, 'height', 0, 35, 2);
 
