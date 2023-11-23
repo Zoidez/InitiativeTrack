@@ -190,9 +190,14 @@ hr {
 	padding-left: 2px;
 }
 
- .sub10Button{
+.sub10Button{
 	width: 44px;
 	padding-left: 3px;
+}
+
+.sub7Button{
+	width: 31px;
+	padding-left: 2px;
 }
 
 /*----------CharAddForm-----------*/
